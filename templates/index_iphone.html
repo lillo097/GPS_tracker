@@ -30,11 +30,51 @@
             overflow: hidden; /* Nascondi eventuali sovrapposizioni */
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Ombra per un effetto 3D */
         }
+
+        /* Stili per il contenitore dei dati */
+        .data-container {
+            display: flex;
+            justify-content: center; /* Centra le icone orizzontalmente */
+            margin: 20px 0; /* Spazio verticale tra le icone e il resto */
+        }
+
+        .data-item {
+            text-align: center; /* Allinea il testo al centro */
+            margin: 0 20px; /* Spazio orizzontale tra le icone */
+            background-color: #fff; /* Sfondo bianco per le icone */
+            border-radius: 10px; /* Angoli stondati per le icone */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombra leggera per un effetto sollevato */
+            padding: 10px; /* Spaziatura interna */
+        }
+
+        .data-item h3 {
+            margin-bottom: 10px; /* Spazio sotto il titolo */
+            font-size: 1.2em; /* Dimensione del font per il titolo */
+            color: #333; /* Colore del testo del titolo */
+        }
+
+        .data-item p {
+            margin: 10px 0 20px; /* Aggiunto margine sotto il paragrafo */
+            font-size: 1.5em; /* Dimensione del font per una migliore leggibilità */
+            color: #555; /* Colore del testo */
+        }
     </style>
 </head>
 <body>
     <h1>Real-Time GPS Tracker</h1>
     <div id="map"></div>
+
+    <!-- Contenitore per velocità e altitudine -->
+    <div class="data-container">
+        <div class="data-item" id="altitude-item">
+            <h3>Quota</h3>
+            <p id="altitude">0 m</p>
+        </div>
+        <div class="data-item" id="speed-item">
+            <h3>Velocità</h3>
+            <p id="speed">0 km/h</p>
+        </div>
+    </div>
 
     <script>
         // Imposta la tua chiave API di Mapbox qui
@@ -61,6 +101,10 @@
                     const newLngLat = [data.longitude, data.latitude];
                     marker.setLngLat(newLngLat);  // Aggiorna la posizione del marker
                     map.setCenter(newLngLat);    // Centra la mappa sulla nuova posizione
+
+                    // Aggiorna anche quota e velocità
+                    document.getElementById('altitude').innerText = data.altitude ? `${data.altitude} m` : 'N/A';
+                    document.getElementById('speed').innerText = data.speed ? `${data.speed} km/h` : 'N/A';
                 })
                 .catch(error => console.error('Errore:', error));
         }
