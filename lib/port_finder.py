@@ -8,6 +8,6 @@ for port in ports:
     print(f"Porta trovata: {port.device}")
 
 
-# Porta trovata: /dev/cu.URT0
+# Port trovata: /dev/cu.URT0
 # Porta trovata: /dev/cu.Bluetooth-Incoming-Port
 # Porta trovata: /dev/cu.usbserial-1420
