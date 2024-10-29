@@ -3,9 +3,14 @@ from flask_cors import CORS
 from pyngrok import ngrok
 import threading
 import time
-import psutil  # Importing psutil for system monitoring
+import psutil  # For system monitoring
 import json
 import requests
+import os
+import logging
+
+# Configure logging to show only INFO level (for Ngrok link and Flask output)
+logging.basicConfig(level=logging.INFO, format="%(message)s")
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -19,13 +24,23 @@ gps_data = {
 }
 
 def start_ngrok():
-    # Start Ngrok tunnel
-    public_url = ngrok.connect(8080)
-    print(f"Ngrok tunnel \"{public_url}\" is running...")
+    """Start the Ngrok tunnel if not already active."""
+    try:
+        tunnels = ngrok.get_tunnels()
+        if tunnels:
+            logging.info("Ngrok is already running.")
+            return
+        public_url = ngrok.connect(8080)
+        # Only display the public URL in a simple, clear format
+        print(f"\nNgrok tunnel link: {public_url}\n")
+    except Exception as e:
+        logging.error(f"Error starting Ngrok: {e}")
 
-    # Keep the Ngrok service running
-    while True:
-        time.sleep(60)  # Sleep to keep the thread alive
+def get_project_path(*subdirs):
+    """Constructs the full path from the current directory."""
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    full_path = os.path.join(current_dir, *subdirs)
+    return full_path
 
 # Start the Ngrok service in a separate thread
 ngrok_thread = threading.Thread(target=start_ngrok)
@@ -58,20 +73,22 @@ def ram_usage():
     }
     return jsonify(ram_usage)
 
-# Function to send coordinates from JSON file in a separate thread
 def send_coordinates():
+    """Send GPS coordinates from a JSON file to a specified URL."""
+    path = get_project_path('lib', 'gps_data_2secs.json')
     url = 'http://127.0.0.1:8080/update_coordinates'
     while True:
-        with open('/Users/liviobasile/Documents/Machine Learning/gitRepos/GPS_tracker/lib/gps_data_2secs.json', encoding='utf8') as f:
-            for row in f:
-                data = json.loads(row)
-                response = requests.post(url, json=data)
-                if response.status_code == 200:
-                    print(f"Coordinates sent: {data}")
-                else:
-                    print("Failed to send coordinates")
-
-                time.sleep(2)
+        try:
+            with open(path, encoding='utf8') as f:
+                for row in f:
+                    data = json.loads(row)
+                    response = requests.post(url, json=data)
+                    if response.status_code == 200:
+                        logging.info(f"Coordinates sent successfully.")
+                    time.sleep(2)
+        except (requests.ConnectionError, json.JSONDecodeError) as e:
+            logging.error(f"Error encountered: {e}")
+            time.sleep(5)  # Retry after a short delay
 
 # Start the coordinates-sending function in a separate thread
 coordinates_thread = threading.Thread(target=send_coordinates)

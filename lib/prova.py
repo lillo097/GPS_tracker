@@ -1,13 +1,5 @@
-import json
-import time
+from pyngrok import ngrok
 
-with open('/Users/liviobasile/Documents/Machine Learning/gitRepos/GPS_tracker/lib/gps_data_2secs.json', encoding='utf8') as f:
-    for row in f:
-        data = json.loads(row)
-        latitiude = float(data['latitude'])
-        longitude = float(data['longitude'])
-        altitude = float(data['altitude'])
-        speed = float(data['speed'])
-
-
-
+# Chiude tutti i tunnel attivi
+ngrok.kill()
+print("Tutti i tunnel Ngrok sono stati chiusi.")

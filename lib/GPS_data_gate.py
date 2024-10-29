@@ -85,18 +85,31 @@ def save_to_json(data):
 #
 #         time.sleep(2)  # Attendi 2 secondi prima di inviare nuovamente il comando
 
-try:
-    while True:
-        with open('/Users/liviobasile/Documents/Machine Learning/gitRepos/GPS_tracker/lib/gps_data_2secs.json',
-                  encoding='utf8') as f:
-            for row in f:
-                data = json.loads(row)
-                response = requests.post(url, json=data)
+# try:
+#     while True:
+#         with open('/Users/liviobasile/Documents/Machine Learning/gitRepos/GPS_tracker/lib/gps_data_2secs.json',
+#                   encoding='utf8') as f:
+#             for row in f:
+#                 data = json.loads(row)
+#                 response = requests.post(url, json=data)
+#
+#                 time.sleep(2)
+#
+# except KeyboardInterrupt:
+#     print("Interruzione da parte dell'utente. Chiusura della connessione seriale.")
+#
+# finally:
+#     ser.close()
 
-                time.sleep(2)
+def get_project_path(*subdirs):
 
-except KeyboardInterrupt:
-    print("Interruzione da parte dell'utente. Chiusura della connessione seriale.")
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    ING_dev_folder = current_dir.replace("\lib", "")
+    full_path = os.path.join(ING_dev_folder, *subdirs)
 
-finally:
-    ser.close()
+    return full_path
+
+print(get_project_path('gps_data_2secs.json'))
+
+with open(get_project_path('gps_data_2secs.json'), 'r') as json_file:
+    print(json_file.read())
