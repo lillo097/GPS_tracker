@@ -4,6 +4,8 @@ from pyngrok import ngrok
 import threading
 import time
 import psutil  # Importing psutil for system monitoring
+import json
+import requests
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -39,7 +41,6 @@ def update_coordinates():
     global gps_data
     data = request.get_json()
     gps_data.update(data)  # Update GPS data
-
     return jsonify({'status': 'success', 'message': 'Coordinates updated'})
 
 @app.route('/get_coordinates', methods=['GET'])
@@ -55,8 +56,27 @@ def ram_usage():
         'rss': memory_info.rss / (1024 * 1024),  # Resident Set Size in MB
         'percent': process.memory_percent()  # Percentage of RAM used by the process
     }
-
     return jsonify(ram_usage)
+
+# Function to send coordinates from JSON file in a separate thread
+def send_coordinates():
+    url = 'http://127.0.0.1:8080/update_coordinates'
+    while True:
+        with open('/Users/liviobasile/Documents/Machine Learning/gitRepos/GPS_tracker/lib/gps_data_2secs.json', encoding='utf8') as f:
+            for row in f:
+                data = json.loads(row)
+                response = requests.post(url, json=data)
+                if response.status_code == 200:
+                    print(f"Coordinates sent: {data}")
+                else:
+                    print("Failed to send coordinates")
+
+                time.sleep(2)
+
+# Start the coordinates-sending function in a separate thread
+coordinates_thread = threading.Thread(target=send_coordinates)
+coordinates_thread.daemon = True
+coordinates_thread.start()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)
