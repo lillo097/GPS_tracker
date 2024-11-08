@@ -7,56 +7,112 @@
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet" />
     <style>
+        /* Reset and basic styling */
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            display: flex;
-            flex-direction: column; /* Align vertically */
-            align-items: center; /* Center horizontally */
-            justify-content: center; /* Center vertically */
-            background-color: #f0f0f0; /* Background color */
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* Font */
-        }
-        h1 {
-            text-align: center;
+            font-family: 'Roboto', Arial, sans-serif;
+            background-color: #f4f6f9;
             color: #333;
-            margin-bottom: 20px; /* Space below the title */
-        }
-        #map {
-            width: 90vw; /* 90% width of the viewport */
-            height: 80vh; /* 80% height of the viewport */
-            border-radius: 15px; /* Rounded corners */
-            overflow: hidden; /* Hide any overflow */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow effect */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* Styles for data container */
+        h1 {
+            font-size: 2rem;
+            color: #333;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        /* Map styling */
+        #map {
+            width: 90vw;
+            height: 70vh;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        /* Data container styling */
         .data-container {
             display: flex;
-            justify-content: center; /* Center the items horizontally */
-            margin: 20px 0; /* Vertical space between the icons and other content */
+            gap: 20px;
+            margin: 20px 0;
+            justify-content: center;
+            padding: 10px;
+            width: 80vw;
         }
 
         .data-item {
-            text-align: center; /* Align text to the center */
-            margin: 0 20px; /* Horizontal space between the items */
-            background-color: #fff; /* White background for the icons */
-            border-radius: 10px; /* Rounded corners for the items */
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Light shadow for elevated effect */
-            padding: 10px; /* Internal padding */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 160px;
+            transition: transform 0.3s ease;
+        }
+
+        .data-item:hover {
+            transform: translateY(-5px);
         }
 
         .data-item h3 {
-            margin-bottom: 10px; /* Space below the title */
-            font-size: 1.2em; /* Title font size */
-            color: #333; /* Title text color */
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            color: #555;
         }
 
         .data-item p {
-            margin: 10px 0 20px; /* Bottom margin for the paragraph */
-            font-size: 1.5em; /* Font size for better readability */
-            color: #555; /* Text color */
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
+
+        /* Styling for the Satellites block */
+        #satellite-item {
+            width: 180px;
+        }
+
+        .satellite-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .satellite-details div {
+            display: flex;
+            align-items: center;
+            font-size: 1.1em;
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .satellite-details .label {
+            font-weight: bold;
+            color: #333;
+            margin-right: 5px;
+        }
+
+        /* Subtle styling for the update and coordinates */
+        .additional-info {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 8px;
+        }
+
+        /* Styling for the index */
+        .satellite-index {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -64,15 +120,29 @@
     <h1>Real-Time GPS Tracker</h1>
     <div id="map"></div>
 
-    <!-- Container for speed and altitude -->
+    <!-- Container for GPS data items -->
     <div class="data-container">
         <div class="data-item" id="altitude-item">
             <h3>Altitude</h3>
             <p id="altitude">0 m</p>
         </div>
         <div class="data-item" id="speed-item">
-            <h3>Speed</h3> <!-- Changed "Speed kmh" to just "Speed" -->
-            <p id="speed_kmh">0 kmh</p>
+            <h3>Speed</h3>
+            <p id="speed_kmh">0 km/h</p>
+        </div>
+        <div class="data-item" id="satellite-item">
+            <h3>Satellites</h3>
+            <p id="num_satellites">0</p>
+            <div class="satellite-details">
+                <div>
+                    <span class="label">Lat:</span><span id="latitude">--</span> <span>N</span>
+                </div>
+                <div>
+                    <span class="label">Lon:</span><span id="longitude">--</span> <span>E</span>
+                </div>
+                <div class="additional-info" id="last-update">Last update: --:--</div>
+                <div class="satellite-index" id="satellite-index">Index: --</div>
+            </div>
         </div>
     </div>
 
@@ -98,14 +168,31 @@
             fetch('/get_coordinates')  // Flask API to get current coordinates
                 .then(response => response.json())
                 .then(data => {
-                    // Update altitude and speed
-                    document.getElementById('altitude').innerText = data.altitude ? `${data.altitude} m` : 'N/A';
-                    document.getElementById('speed_kmh').innerText = data.speed_kmh ? `${data.speed_kmh} kmh` : 'N/A';
+                    // Round and update altitude and speed
+                    document.getElementById('altitude').innerText = data.altitude ? `${Math.round(data.altitude)} m` : 'N/A';
+                    document.getElementById('speed_kmh').innerText = data.speed_kmh ? `${Math.round(data.speed_kmh)} km/h` : 'N/A';
+
+                    // Update satellite count
+                    document.getElementById('num_satellites').innerText = data.num_satellites || 'N/A';
+
+                    // Update last update time
+                    const lastUpdateTime = data.time ? data.time : '--:--';
+                    document.getElementById('last-update').innerText = `Last update: ${lastUpdateTime}`;
+
+                    // Update latitude and longitude display
+                    const latitude = data.latitude ? data.latitude.toFixed(4) : '--';
+                    const longitude = data.longitude ? data.longitude.toFixed(4) : '--';
+                    document.getElementById('latitude').innerText = latitude;
+                    document.getElementById('longitude').innerText = longitude;
+
+                    // Update index display
+                    const index = data.index || '--';
+                    document.getElementById('satellite-index').innerText = `Index: ${index}`;
 
                     // Update marker position on the map
                     if (data.latitude && data.longitude) {
                         marker.setLngLat([data.longitude, data.latitude]);
-                        map.panTo([data.longitude, data.latitude]); // Move map to the new position
+                        map.panTo([data.longitude, data.latitude]);
                     }
                 })
                 .catch(error => console.error('Error:', error));

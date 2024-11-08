@@ -2,6 +2,8 @@ import serial
 import time
 import re
 import requests  # Import requests to send data to a server
+import time
+from datetime import datetime
 
 
 def convert_latitude(lat, direction):
@@ -99,6 +101,7 @@ try:
         aggregated_data = {}
 
         buffer = []
+        index = 0
         while True:
             try:
                 # Read a line of data from the GPS module
@@ -110,18 +113,26 @@ try:
                     if len(buffer) >= 3:
                         # Parse the accumulated NMEA sentences
                         data = parse_nmea_sentences(buffer)
-                        send_to_flask(data)
+
                         buffer.clear()  # Clear buffer for the next batch of sentences
 
                         # Merge the data into the aggregated data dictionary
                         aggregated_data.update(data)
 
                         # Print the aggregated GPS data
+                        current_time = time.time()
+
+                        # Format the time to HH:MM
+                        formatted_time = datetime.fromtimestamp(current_time).strftime('%H:%M:%S')
+                        aggregated_data['time'] = formatted_time
+                        aggregated_data['index'] = index
                         if aggregated_data:
                             print_gps_data(aggregated_data)
+                            send_to_flask(aggregated_data)
 
                 # Wait a bit before reading the next line
                 time.sleep(0.5)
+                index += 1
 
             except KeyboardInterrupt:
                 print("Stopping GPS data reading.")
