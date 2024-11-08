@@ -12,51 +12,51 @@
             padding: 0;
             height: 100%;
             display: flex;
-            flex-direction: column; /* Allinea verticalmente */
-            align-items: center; /* Allineare al centro */
-            justify-content: center; /* Allineare orizzontalmente al centro */
-            background-color: #f0f0f0; /* Colore di sfondo */
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* Font per Apple */
+            flex-direction: column; /* Align vertically */
+            align-items: center; /* Center horizontally */
+            justify-content: center; /* Center vertically */
+            background-color: #f0f0f0; /* Background color */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* Font */
         }
         h1 {
             text-align: center;
             color: #333;
-            margin-bottom: 20px; /* Spazio sotto il titolo */
+            margin-bottom: 20px; /* Space below the title */
         }
         #map {
-            width: 90vw; /* Utilizza una larghezza del 90% della viewport */
-            height: 80vh; /* Utilizza un'altezza dell'80% della viewport */
-            border-radius: 15px; /* Angoli stondati */
-            overflow: hidden; /* Nascondi eventuali sovrapposizioni */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Ombra per un effetto 3D */
+            width: 90vw; /* 90% width of the viewport */
+            height: 80vh; /* 80% height of the viewport */
+            border-radius: 15px; /* Rounded corners */
+            overflow: hidden; /* Hide any overflow */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow effect */
         }
 
-        /* Stili per il contenitore dei dati */
+        /* Styles for data container */
         .data-container {
             display: flex;
-            justify-content: center; /* Centra le icone orizzontalmente */
-            margin: 20px 0; /* Spazio verticale tra le icone e il resto */
+            justify-content: center; /* Center the items horizontally */
+            margin: 20px 0; /* Vertical space between the icons and other content */
         }
 
         .data-item {
-            text-align: center; /* Allinea il testo al centro */
-            margin: 0 20px; /* Spazio orizzontale tra le icone */
-            background-color: #fff; /* Sfondo bianco per le icone */
-            border-radius: 10px; /* Angoli stondati per le icone */
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombra leggera per un effetto sollevato */
-            padding: 10px; /* Spaziatura interna */
+            text-align: center; /* Align text to the center */
+            margin: 0 20px; /* Horizontal space between the items */
+            background-color: #fff; /* White background for the icons */
+            border-radius: 10px; /* Rounded corners for the items */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Light shadow for elevated effect */
+            padding: 10px; /* Internal padding */
         }
 
         .data-item h3 {
-            margin-bottom: 10px; /* Spazio sotto il titolo */
-            font-size: 1.2em; /* Dimensione del font per il titolo */
-            color: #333; /* Colore del testo del titolo */
+            margin-bottom: 10px; /* Space below the title */
+            font-size: 1.2em; /* Title font size */
+            color: #333; /* Title text color */
         }
 
         .data-item p {
-            margin: 10px 0 20px; /* Aggiunto margine sotto il paragrafo */
-            font-size: 1.5em; /* Dimensione del font per una migliore leggibilità */
-            color: #555; /* Colore del testo */
+            margin: 10px 0 20px; /* Bottom margin for the paragraph */
+            font-size: 1.5em; /* Font size for better readability */
+            color: #555; /* Text color */
         }
     </style>
 </head>
@@ -64,52 +64,54 @@
     <h1>Real-Time GPS Tracker</h1>
     <div id="map"></div>
 
-    <!-- Contenitore per velocità e altitudine -->
+    <!-- Container for speed and altitude -->
     <div class="data-container">
         <div class="data-item" id="altitude-item">
-            <h3>Quota</h3>
+            <h3>Altitude</h3>
             <p id="altitude">0 m</p>
         </div>
         <div class="data-item" id="speed-item">
-            <h3>Velocità</h3>
-            <p id="speed">0 km/h</p>
+            <h3>Speed</h3> <!-- Changed "Speed kmh" to just "Speed" -->
+            <p id="speed_kmh">0 kmh</p>
         </div>
     </div>
 
     <script>
-        // Imposta la tua chiave API di Mapbox qui
+        // Set your Mapbox API key here
         mapboxgl.accessToken = 'pk.eyJ1IjoibGlsbG8wOTciLCJhIjoiY20yOTZpamprMDB1djJqczd5ZzdlazR0YyJ9.Sro2dK6MfaSyBeZzBXmDSw';
 
-        // Crea una nuova mappa
+        // Create a new map
         const map = new mapboxgl.Map({
-            container: 'map', // ID dell'elemento HTML che contiene la mappa
-            style: 'mapbox://styles/mapbox/streets-v11', // Stile della mappa
-            center: [0, 0], // Coordinate iniziali (longitudine, latitudine)
-            zoom: 2 // Livello di zoom iniziale
+            container: 'map', // ID of the HTML element containing the map
+            style: 'mapbox://styles/mapbox/streets-v11', // Map style
+            center: [0, 0], // Initial coordinates (longitude, latitude)
+            zoom: 2 // Initial zoom level
         });
 
-        // Crea un marker iniziale (posizione predefinita)
+        // Create an initial marker (default position)
         let marker = new mapboxgl.Marker()
-            .setLngLat([0, 0]) // Posizione iniziale
+            .setLngLat([0, 0]) // Initial position
             .addTo(map);
 
-        // Funzione per aggiornare le coordinate ogni 2 secondi
+        // Function to update coordinates every 2 seconds
         function updateCoordinates() {
-            fetch('/get_coordinates')  // API Flask per ottenere le coordinate attuali
+            fetch('/get_coordinates')  // Flask API to get current coordinates
                 .then(response => response.json())
                 .then(data => {
-                    const newLngLat = [data.longitude, data.latitude];
-                    marker.setLngLat(newLngLat);  // Aggiorna la posizione del marker
-                    map.setCenter(newLngLat);    // Centra la mappa sulla nuova posizione
-
-                    // Aggiorna anche quota e velocità
+                    // Update altitude and speed
                     document.getElementById('altitude').innerText = data.altitude ? `${data.altitude} m` : 'N/A';
-                    document.getElementById('speed').innerText = data.speed ? `${data.speed} km/h` : 'N/A';
+                    document.getElementById('speed_kmh').innerText = data.speed_kmh ? `${data.speed_kmh} kmh` : 'N/A';
+
+                    // Update marker position on the map
+                    if (data.latitude && data.longitude) {
+                        marker.setLngLat([data.longitude, data.latitude]);
+                        map.panTo([data.longitude, data.latitude]); // Move map to the new position
+                    }
                 })
-                .catch(error => console.error('Errore:', error));
+                .catch(error => console.error('Error:', error));
         }
 
-        // Aggiorna le coordinate ogni 2 secondi
+        // Update coordinates every 2 seconds
         setInterval(updateCoordinates, 2000);
     </script>
 </body>

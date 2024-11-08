@@ -20,7 +20,7 @@ gps_data = {
     'latitude': 0.0,
     'longitude': 0.0,
     'altitude': 0.0,  # Initialize to 0.0 or a predefined value
-    'speed': 0.0  # Initialize to 0.0 or a predefined value
+    'speed_kmh': 0.0  # Initialize to 0.0 or a predefined value
 }
 
 def start_ngrok():
@@ -73,22 +73,35 @@ def ram_usage():
     }
     return jsonify(ram_usage)
 
+
 def send_coordinates():
-    """Send GPS coordinates from a JSON file to a specified URL."""
-    path = get_project_path('lib', 'gps_data_2secs.json')
+    """Send GPS coordinates to the Flask app in a continuous loop."""
     url = 'http://127.0.0.1:8080/update_coordinates'
+
+    # Start reading GPS data
+    gps_generator = gps_info(serial_port)
+
     while True:
         try:
-            with open(path, encoding='utf8') as f:
-                for row in f:
-                    data = json.loads(row)
-                    response = requests.post(url, json=data)
-                    if response.status_code == 200:
-                        logging.info(f"Coordinates sent successfully.")
-                    time.sleep(2)
+            # Get the latest GPS data from the generator
+            gps_data = next(gps_generator)
+
+            # Send the GPS data to Flask API
+            response = requests.post(url, json=gps_data)
+            if response.status_code == 200:
+                logging.info(f"Coordinates sent successfully.")
+            else:
+                logging.error(f"Failed to send coordinates. Status code: {response.status_code}")
+
+            time.sleep(2)  # Send data every 2 seconds
+
         except (requests.ConnectionError, json.JSONDecodeError) as e:
             logging.error(f"Error encountered: {e}")
             time.sleep(5)  # Retry after a short delay
+        except StopIteration:
+            logging.error("GPS data generator stopped.")
+            break
+
 
 # Start the coordinates-sending function in a separate thread
 coordinates_thread = threading.Thread(target=send_coordinates)
