@@ -7,45 +7,62 @@
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet" />
     <style>
-        /* Reset and basic styling */
+        /* Basic reset for styling */
         body, html {
             margin: 0;
             padding: 0;
-            height: 100%;
-            font-family: 'Roboto', Arial, sans-serif;
-            background-color: #f4f6f9;
-            color: #333;
+            width: 100%;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-
-        h1 {
-            font-size: 2rem;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
             color: #333;
-            text-align: center;
-            margin: 20px 0;
         }
 
-        /* Map styling */
-        #map {
+        /* Main title styling */
+        h1 {
+            font-size: 1.5rem;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        /* Map container styling */
+        #map-container {
             width: 90vw;
-            height: 70vh;
-            border-radius: 15px;
+            height: 50vh; /* Map height set to 50% of the viewport height */
+            margin-bottom: 20px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
+            border-radius: 15px;
         }
 
-        /* Data container styling */
+        #map {
+            width: 100%;
+            height: 100%; /* Ensures the map takes up the entire height of its container */
+            border-radius: 15px;
+        }
+
+        /* Data items container */
         .data-container {
             display: flex;
+            flex-direction: column;
             gap: 20px;
-            margin: 20px 0;
+            width: 90vw;
             justify-content: center;
+            align-items: center; /* Centering the content */
             padding: 10px;
-            width: 80vw;
         }
 
+        /* Row to place Altitude and Speed side by side */
+        .data-row {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* Individual data item styling */
         .data-item {
             display: flex;
             flex-direction: column;
@@ -53,152 +70,110 @@
             background-color: #fff;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+            padding: 15px;
             width: 160px;
-            transition: transform 0.3s ease;
         }
 
-        .data-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .data-item h3 {
+        .data-item h3, .satellites-block h3 {
             font-size: 1.1em;
-            margin-bottom: 8px;
             color: #555;
+            margin-bottom: 5px;
         }
 
-        .data-item p {
-            font-size: 1.6em;
+        .data-item p, .satellites-block p {
+            font-size: 1.2em;
             font-weight: bold;
             color: #333;
             margin: 0;
         }
 
-        /* Styling for the Satellites block */
-        #satellite-item {
-            width: 180px;
-        }
-
-        .satellite-details {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .satellite-details div {
-            display: flex;
-            align-items: center;
-            font-size: 1.1em;
-            margin: 5px 0;
-            color: #555;
-        }
-
-        .satellite-details .label {
-            font-weight: bold;
-            color: #333;
-            margin-right: 5px;
-        }
-
-        /* Subtle styling for the update and coordinates */
         .additional-info {
             font-size: 0.9em;
             color: #777;
             margin-top: 8px;
         }
 
-        /* Styling for the index */
-        .satellite-index {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #2c3e50;
-            margin-top: 10px;
+        /* Consistent Satellites block styling */
+        .satellites-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            width: 160px;
+            font-size: 0.9em;
+            text-align: center;
         }
+
     </style>
 </head>
 <body>
     <h1>Real-Time GPS Tracker</h1>
-    <div id="map"></div>
 
-    <!-- Container for GPS data items -->
+    <!-- Map container -->
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
+
+    <!-- Data items container -->
     <div class="data-container">
-        <div class="data-item" id="altitude-item">
-            <h3>Altitude</h3>
-            <p id="altitude">0 m</p>
+        <div class="data-row">
+            <div class="data-item">
+                <h3>Altitude</h3>
+                <p id="altitude">0 m</p>
+            </div>
+            <div class="data-item">
+                <h3>Speed</h3>
+                <p id="speed_kmh">0 km/h</p>
+            </div>
         </div>
-        <div class="data-item" id="speed-item">
-            <h3>Speed</h3>
-            <p id="speed_kmh">0 km/h</p>
-        </div>
-        <div class="data-item" id="satellite-item">
+        <!-- Satellites block with consistent font dimensions -->
+        <div class="satellites-block">
             <h3>Satellites</h3>
             <p id="num_satellites">0</p>
-            <div class="satellite-details">
-                <div>
-                    <span class="label">Lat:</span><span id="latitude">--</span> <span>N</span>
-                </div>
-                <div>
-                    <span class="label">Lon:</span><span id="longitude">--</span> <span>E</span>
-                </div>
-                <div class="additional-info" id="last-update">Last update: --:--</div>
-                <div class="satellite-index" id="satellite-index">Index: --</div>
-            </div>
+            <p>Lat: <span id="latitude">--</span></p>
+            <p>Lon: <span id="longitude">--</span></p>
+            <div class="additional-info" id="last-update">Last update: --:--</div>
         </div>
     </div>
 
     <script>
-        // Set your Mapbox API key here
+        // Set up Mapbox token and initialize map
         mapboxgl.accessToken = 'pk.eyJ1IjoibGlsbG8wOTciLCJhIjoiY20yOTZpamprMDB1djJqczd5ZzdlazR0YyJ9.Sro2dK6MfaSyBeZzBXmDSw';
-
-        // Create a new map
         const map = new mapboxgl.Map({
-            container: 'map', // ID of the HTML element containing the map
-            style: 'mapbox://styles/mapbox/streets-v11', // Map style
-            center: [0, 0], // Initial coordinates (longitude, latitude)
-            zoom: 2 // Initial zoom level
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [0, 0],
+            zoom: 2
         });
 
-        // Create an initial marker (default position)
-        let marker = new mapboxgl.Marker()
-            .setLngLat([0, 0]) // Initial position
-            .addTo(map);
-
-        // Function to update coordinates every 2 seconds
-        function updateCoordinates() {
-            fetch('/get_coordinates')  // Flask API to get current coordinates
-                .then(response => response.json())
-                .then(data => {
-                    // Round and update altitude and speed
-                    document.getElementById('altitude').innerText = data.altitude ? `${Math.round(data.altitude)} m` : 'N/A';
-                    document.getElementById('speed_kmh').innerText = data.speed_kmh ? `${Math.round(data.speed_kmh)} km/h` : 'N/A';
-
-                    // Update satellite count
-                    document.getElementById('num_satellites').innerText = data.num_satellites || 'N/A';
-
-                    // Update last update time
-                    const lastUpdateTime = data.time ? data.time : '--:--';
-                    document.getElementById('last-update').innerText = `Last update: ${lastUpdateTime}`;
-
-                    // Update latitude and longitude display
-                    const latitude = data.latitude ? data.latitude.toFixed(4) : '--';
-                    const longitude = data.longitude ? data.longitude.toFixed(4) : '--';
-                    document.getElementById('latitude').innerText = latitude;
-                    document.getElementById('longitude').innerText = longitude;
-
-                    // Update index display
-                    const index = data.index || '--';
-                    document.getElementById('satellite-index').innerText = `Index: ${index}`;
-
-                    // Update marker position on the map
-                    if (data.latitude && data.longitude) {
-                        marker.setLngLat([data.longitude, data.latitude]);
-                        map.panTo([data.longitude, data.latitude]);
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-        }
+        // Initialize marker at center
+        const marker = new mapboxgl.Marker().setLngLat([0, 0]).addTo(map);
 
         // Update coordinates every 2 seconds
+        function updateCoordinates() {
+            fetch('/get_coordinates')  // Replace with actual Flask endpoint
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('altitude').innerText = data.altitude ? `${Math.round(data.altitude)} m` : 'N/A';
+                    document.getElementById('speed_kmh').innerText = data.speed_kmh ? `${Math.round(data.speed_kmh)} km/h` : 'N/A';
+                    document.getElementById('num_satellites').innerText = data.num_satellites || 'N/A';
+                    document.getElementById('last-update').innerText = `Last update: ${data.time || '--:--'}`;
+
+                    if (data.latitude && data.longitude) {
+                        const coordinates = [data.longitude, data.latitude];
+                        marker.setLngLat(coordinates);
+                        map.panTo(coordinates);
+
+                        document.getElementById('latitude').innerText = data.latitude.toFixed(5);
+                        document.getElementById('longitude').innerText = data.longitude.toFixed(5);
+                    }
+                })
+                .catch(error => console.error('Error fetching coordinates:', error));
+        }
+
         setInterval(updateCoordinates, 2000);
     </script>
 </body>
