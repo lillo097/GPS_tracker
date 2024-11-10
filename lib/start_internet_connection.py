@@ -1,91 +1,125 @@
 import serial
 import time
-import json  # Importa la libreria json
+import re
+import requests
+from datetime import datetime
+import serial.tools.list_ports
+import json
+import threading  # Per inviare i dati senza interrompere la lettura seriale
 
-# Configura la connessione seriale
-ser = serial.Serial('/dev/cu.usbserial-1420', baudrate=9600, timeout=2)  # Assicurati che la porta sia corretta
 
-def send_command(command, delay=1):
-    ser.write((command + '\r\n').encode())
-    time.sleep(delay)
-    response = ser.read(ser.inWaiting()).decode()
-    print(f"Command: {command}, Response: {response}")  # Stampa il comando e la risposta
-    return response
+def convert_latitude(lat, direction):
+    """Converts latitude from NMEA format to decimal degrees."""
+    if lat:
+        match = re.match(r'(\d{2})(\d{2}\.\d+)', lat)
+        if match:
+            degrees = float(match.group(1))
+            minutes = float(match.group(2))
+            decimal_lat = degrees + minutes / 60.0
+            return decimal_lat if direction == 'N' else -decimal_lat
+    return None
 
-def interpret_signal_quality(rssi):
-    if rssi == 99:
-        return "Segnale non disponibile"
-    elif 0 <= rssi <= 9:
-        return "Segnale debole"
-    elif 10 <= rssi <= 14:
-        return "Segnale moderato"
-    elif 15 <= rssi <= 19:
-        return "Buona qualità"
-    elif 20 <= rssi <= 31:
-        return "Ottima qualità"
+
+def convert_longitude(lon, direction):
+    """Converts longitude from NMEA format to decimal degrees."""
+    if lon:
+        match = re.match(r'(\d{3})(\d{2}\.\d+)', lon)
+        if match:
+            degrees = float(match.group(1))
+            minutes = float(match.group(2))
+            decimal_lon = degrees + minutes / 60.0
+            return decimal_lon if direction == 'E' else -decimal_lon
+    return None
+
+
+def parse_nmea_sentences(nmea_sentence):
+    """Parses a single NMEA sentence and returns useful information."""
+    data = {}
+    parts = nmea_sentence.split(',')
+
+    # Controlla che ci siano abbastanza parti nella riga NMEA
+    if len(parts) < 6:
+        print("Riga NMEA incompleta:", nmea_sentence)
+        return None
+
+    if nmea_sentence.startswith('$GNGGA'):  # Global Positioning System Fix Data
+        if len(parts) >= 10:  # Assicurati che ci siano almeno 10 campi per il GNGGA
+            data['fix_time'] = parts[1]
+            data['latitude'] = convert_latitude(parts[2], parts[3])
+            data['longitude'] = convert_longitude(parts[4], parts[5])
+            data['fix_quality'] = parts[6]
+            data['num_satellites'] = parts[7]
+            data['altitude'] = parts[9]
+
+    elif nmea_sentence.startswith('$GNRMC'):  # Recommended Minimum Specific GPS Data
+        if len(parts) >= 10:  # Assicurati che ci siano almeno 10 campi per il GNRMC
+            data['fix_time'] = parts[1]
+            data['status'] = parts[2]
+            data['latitude'] = convert_latitude(parts[3], parts[4])
+            data['longitude'] = convert_longitude(parts[5], parts[6])
+            data['speed_over_ground'] = parts[7]
+            data['course_over_ground'] = parts[8]
+            data['date'] = parts[9]
+
+    return data
+
+
+def print_gps_data(data):
+    """Prints GPS data in a formatted way."""
+    print("GPS Data:")
+    for key, value in data.items():
+        print(f"{key.replace('_', ' ').capitalize()}: {value}")
+    print("\n" + "-" * 20 + "\n")
+
+
+def send_to_flask(data):
+    """Send the parsed GPS data to Flask."""
+    url = 'http://127.0.0.1:8080/update_coordinates'  # Flask server URL
+    response = requests.post(url, json=data)
+    if response.status_code == 200:
+        print("Data successfully sent to Flask!")
     else:
-        return "Valore RSSI non valido"
+        print(f"Failed to send data: {response.status_code}")
 
-# Funzione per ottenere l'indirizzo IP
-def get_ip():
-    ip_response = send_command('AT+CIFSR')
-    # Rimuovi eventuali spazi e il prefisso "CIFSR: "
-    return ip_response.strip().replace('CIFSR: ', '')
 
-# Funzione per salvare i dati in un file JSON
-def save_to_json(data, json_file_path='signal_quality.json'):
-    with open(json_file_path, 'a', encoding='utf-8') as json_file:  # Apri in modalità append
-        json.dump(data, json_file)
-        json_file.write('\n')  # Scrivi una nuova riga per ogni entry
+def write_to_json(data, filename="gps_log.json"):
+    """Appends GPS data to a JSON file."""
+    log_data = {
+        "timestamp": data["time"],
+        "latitude": data.get("latitude"),
+        "longitude": data.get("longitude")
+    }
+    with open(filename, "a") as json_file:
+        json.dump(log_data, json_file)
+        json_file.write("\n")
 
-# Inizializza il modulo
-print(send_command('AT'))  # Verifica la connessione
-print(send_command('AT+CPIN=7030'))  # Inserisci il tuo PIN
-print(send_command('AT+CREG?'))  # Controlla la registrazione nella rete
-print(send_command('AT+CGATT=1'))  # Attiva la registrazione nella rete
+ports = serial.tools.list_ports.comports()
+list_of_ports = [port.device for port in ports]
+serial_port = list_of_ports[-1]
 
-# Configura l'APN
-print(send_command('AT+CSTT="internet.wind","",""'))  # Configura l'APN per WIND
-
-# Attiva la connessione
-print(send_command('AT+CIICR'))  # Attiva la connessione
-print(get_ip())  # Ottieni l'indirizzo IP iniziale
-
-# Ciclo per controllare la qualità del segnale ogni 2 secondi
 try:
-    while True:
-        signal_quality = send_command('AT+CSQ')
+    with serial.Serial(serial_port, baudrate=9600, timeout=1) as ser:  # Imposta baudrate alto
+        ser.reset_input_buffer()
+        print("Listening for GPS data...")
+        index = 0
+        while True:
+            line = ser.readline().decode('ascii', errors='replace').strip()
+            if line.startswith('$GNGGA') or line.startswith('$GNRMC'):  # Solo dati rilevanti
+                data = parse_nmea_sentences(line)
+                if data:
+                    current_time = time.time()
+                    formatted_time = datetime.fromtimestamp(current_time).strftime('%H:%M:%S')
+                    data['time'] = formatted_time
+                    data['index'] = index
+                    print_gps_data(data)
 
-        # Controlla se la risposta contiene i dati previsti
-        if 'CSQ' in signal_quality:
-            parts = signal_quality.split(":")[1].strip().split(",")
-            rssi_value = int(parts[0])
-            quality_description = interpret_signal_quality(rssi_value)
+                    # Invia dati al server Flask in un thread separato
+                    threading.Thread(target=send_to_flask, args=(data,)).start()
+                    write_to_json(data)
 
-            # Ottieni l'indirizzo IP corrente
-            current_ip = get_ip()
+                index += 1
+            # Riduci il ritardo tra letture
+            time.sleep(0.1)
 
-            print("Qualità del segnale:", quality_description)
-            print("Indirizzo IP corrente:", current_ip)
-
-            # Dati da salvare
-            data = {
-                'timestamp': time.strftime("%Y-%m-%d %H:%M:%S"),
-                'rssi': rssi_value,
-                'quality': quality_description,
-                'ip_address': current_ip
-            }
-
-            # Salva i dati nel file JSON
-            save_to_json(data)
-        else:
-            print("Risposta inaspettata dal comando AT+CSQ:", signal_quality)
-
-        time.sleep(2)  # Attendi 2 secondi prima di ripetere
-
-except KeyboardInterrupt:
-    print("Interruzione da parte dell'utente. Chiusura della connessione seriale.")
-
-finally:
-    # Chiudi la connessione seriale alla fine
-    ser.close()
+except serial.SerialException as e:
+    print(f"Error opening serial port: {e}")

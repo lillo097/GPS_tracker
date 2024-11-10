@@ -4,6 +4,8 @@ import re
 import requests  # Import requests to send data to a server
 import time
 from datetime import datetime
+import serial.tools.list_ports
+import json
 
 
 def convert_latitude(lat, direction):
@@ -90,22 +92,36 @@ def send_to_flask(data):
     #     print(f"Failed to send data: {response.status_code}")
 
 
-serial_port = '/dev/cu.usbserial-1410'
+def write_to_json(data, filename="gps_log.json"):
+    """Appends GPS data to a JSON file."""
+    log_data = {
+        "timestamp": data["time"],
+        "latitude": data.get("latitude"),
+        "longitude": data.get("longitude")
+    }
+
+    with open(filename, "a") as json_file:
+        json.dump(log_data, json_file)
+        json_file.write("\n")  # Write each entry on a new line for easy reading
+
+
+ports = serial.tools.list_ports.comports()
+list_of_ports = []
+for port in ports:
+    list_of_ports.append(port.device)
+serial_port = list_of_ports[-1]
+
 """Reads and returns GPS data from the NEO-M8N module in an infinite loop."""
 """Reads and displays GPS information from the NEO-M8N module."""
 try:
     # Open the serial port
-    with serial.Serial(serial_port, baudrate=9600, timeout=1) as ser:
+    with serial.Serial(serial_port, baudrate=9600, timeout=2) as ser:
+        ser.reset_input_buffer()  # Clear buffer at start
         print("Listening for GPS data...")
-
-        # Create a dictionary to hold aggregated GPS data
-        # aggregated_data = {}
-        #
-        # buffer = []
         index = 0
         while True:
             try:
-                # Read a line of data from the GPS module
+
                 line = ser.readline().decode('ascii', errors='replace').strip()
                 print('line: ',line)
                 if line.startswith('$'):
@@ -114,12 +130,13 @@ try:
                     if len(data) > 0:
                         current_time = time.time()
 
-                    # Format the time to HH:MM
-                    formatted_time = datetime.fromtimestamp(current_time).strftime('%H:%M:%S')
-                    data['time'] = formatted_time
-                    data['index'] = index
-                    print_gps_data(data)
-                    send_to_flask(data)
+                        # Format the time to HH:MM
+                        formatted_time = datetime.fromtimestamp(current_time).strftime('%H:%M:%S')
+                        data['time'] = formatted_time
+                        data['index'] = index
+                        print_gps_data(data)
+                        send_to_flask(data)
+                        write_to_json(data)
                     #print(data)
                     # buffer.append(line)
                     #
@@ -140,6 +157,7 @@ try:
                     #     send_to_flask(aggregated_data)
 
                 # Wait a bit before reading the next line
+                #ser.reset_input_buffer()  # Clear buffer before each read
                 time.sleep(0.5)
                 index += 1
 
@@ -156,5 +174,6 @@ except serial.SerialException as e:
 
 
 # Specify the port name here. For example: 'COM3' on Windows or '/dev/ttyUSB0' on Linux
+
 
 
