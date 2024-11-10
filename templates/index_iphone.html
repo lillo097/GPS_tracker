@@ -12,54 +12,54 @@
             padding: 0;
             height: 100%;
             display: flex;
-            align-items: center; /* Allineare verticalmente al centro */
-            justify-content: center; /* Allineare orizzontalmente al centro */
-            background-color: #f0f0f0; /* Colore di sfondo */
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
         }
         #map {
-            width: 80vw; /* Utilizza una larghezza del 80% della viewport */
-            height: 80vh; /* Utilizza un'altezza dell'80% della viewport */
-            border-radius: 15px; /* Angoli stondati */
-            overflow: hidden; /* Nascondi eventuali sovrapposizioni */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Ombra per un effetto 3D */
+            width: 80vw;
+            height: 80vh;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
 <body>
-    <h1 style="text-align: center; color: #333;">Real-Time GPS Tracker</h1>
     <div id="map"></div>
-
     <script>
-        // Imposta la tua chiave API di Mapbox qui
         mapboxgl.accessToken = 'pk.eyJ1IjoibGlsbG8wOTciLCJhIjoiY20yOTZpamprMDB1djJqczd5ZzdlazR0YyJ9.Sro2dK6MfaSyBeZzBXmDSw';
 
-        // Crea una nuova mappa
         const map = new mapboxgl.Map({
-            container: 'map', // ID dell'elemento HTML che contiene la mappa
-            style: 'mapbox://styles/mapbox/streets-v11', // Stile della mappa
-            center: [0, 0], // Coordinate iniziali (longitudine, latitudine)
-            zoom: 2 // Livello di zoom iniziale
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [0, 0],
+            zoom: 2
         });
 
-        // Crea un marker iniziale (posizione predefinita)
-        let marker = new mapboxgl.Marker()
-            .setLngLat([0, 0]) // Posizione iniziale
-            .addTo(map);
+        let marker = new mapboxgl.Marker().setLngLat([0, 0]).addTo(map);
+        let lastCoordinates = [0, 0];
 
-        // Funzione per aggiornare le coordinate ogni 2 secondi
-        function updateCoordinates() {
-            fetch('/get_coordinates')  // API Flask per ottenere le coordinate attuali
-                .then(response => response.json())
-                .then(data => {
-                    const newLngLat = [data.longitude, data.latitude];
-                    marker.setLngLat(newLngLat);  // Aggiorna la posizione del marker
-                    map.setCenter(newLngLat);    // Centra la mappa sulla nuova posizione
-                })
-                .catch(error => console.error('Errore:', error));
+        async function updateCoordinates() {
+            try {
+                const response = await fetch('/get_coordinates');
+                const data = await response.json();
+                const newLngLat = [data.longitude, data.latitude];
+
+                // Controlla se le coordinate sono cambiate
+                if (newLngLat[0] !== lastCoordinates[0] || newLngLat[1] !== lastCoordinates[1]) {
+                    marker.setLngLat(newLngLat); // Aggiorna solo il marker
+                    lastCoordinates = newLngLat;
+                }
+            } catch (error) {
+                console.error('Errore:', error);
+            }
+
+            // Pianifica l'aggiornamento per il prossimo frame
+            requestAnimationFrame(updateCoordinates);
         }
 
-        // Aggiorna le coordinate ogni 2 secondi
-        setInterval(updateCoordinates, 2000);
+        // Avvia l'aggiornamento continuo delle coordinate
+        updateCoordinates();
     </script>
 </body>
 </html>
