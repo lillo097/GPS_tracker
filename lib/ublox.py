@@ -86,7 +86,7 @@ q = Queue()
 serial_port = '/dev/serial0'
 
 try:
-    with serial.Serial(serial_port, baudrate=19200, timeout=1) as ser: #19200
+    with serial.Serial(serial_port, baudrate=115200, timeout=1) as ser: #19200
         ser.reset_input_buffer()
         print("Listening for GPS data...")
         index = 0

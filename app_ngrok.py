@@ -8,7 +8,6 @@ import json
 import requests
 import os
 import logging
-
 # Configure logging to show only INFO level (for Ngrok link and Flask output)
 logging.basicConfig(level=logging.INFO, format="%(message)s")
 

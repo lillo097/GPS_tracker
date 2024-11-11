@@ -8,6 +8,7 @@ import requests
 import os
 import logging
 import subprocess
+from email_sender import *
 
 # Configure logging to show only INFO level (for Localtunnel link and Flask output)
 logging.basicConfig(level=logging.INFO, format="%(message)s")
@@ -23,20 +24,36 @@ gps_data = {
     'speed_kmh': 0.0  # Initialize to 0.0 or a predefined value
 }
 
+localtunnel_link = None  # Variable to store the Localtunnel link
+email_sent = False  # Flag to ensure only one email is sent
+
 
 def start_localtunnel():
     """Start the Localtunnel process to expose the server publicly."""
+    global localtunnel_link, email_sent
     try:
         # Run Localtunnel on port 8080
         lt_process = subprocess.Popen(["lt", "--port", "8080"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         while True:
             output = lt_process.stdout.readline().decode()
+            if output == '' and lt_process.poll() is not None:
+                break  # Exit if no more output and process has finished
             if "your url is" in output:
                 public_url = output.split("is")[-1].strip()
-                logging.info(f"\nLocaltunnel link: {public_url}\n")
-                break
+
+                if localtunnel_link != public_url:  # Check if the link has already been generated
+                    localtunnel_link = public_url
+                    logging.info(f"\nLocaltunnel link: {public_url}\n")
+
+                    subject = "Your Localtunnel Link"
+                    body = f"Ciao,\n\nEcco il tuo link al tunnel Localtunnel: {public_url}\n\nSaluti."
+                    #send_email(subject, body)  # Chiamata alla funzione send_email per inviare l'email
+
+                    break  # Stop after finding the first link
+
     except Exception as e:
         logging.error(f"Error starting Localtunnel: {e}")
+
 
 
 # Start Localtunnel in a separate thread
@@ -75,46 +92,8 @@ def ram_usage():
     return jsonify(ram_usage)
 
 
-def send_coordinates(event):
-    """Send GPS coordinates to the Flask app in a continuous loop."""
-    url = 'http://127.0.0.1:8080/update_coordinates'
-    gps_generator = gps_info(serial_port)  # Assuming serial_port is defined globally
-
-    while not event.is_set():
-        try:
-            gps_data = next(gps_generator)
-
-            # Set the custom header 'bypass-tunnel-reminder' with any value
-            headers = {
-                'bypass-tunnel-reminder': 'true',  # or any value you want to use
-            }
-
-            response = requests.post(url, json=gps_data, headers=headers)  # Add headers to the request
-
-            if response.status_code == 200:
-                logging.info("Coordinates sent successfully.")
-            else:
-                logging.warning(f"Failed to send coordinates. Status: {response.status_code}")
-
-            event.wait(2)  # Wait for 2 seconds or exit if event is set
-        except (requests.ConnectionError, json.JSONDecodeError) as e:
-            logging.error(f"Error encountered: {e}")
-            event.wait(5)  # Retry after delay on error
-        except StopIteration:
-            logging.error("GPS data generator stopped.")
-            break
-
-
 if __name__ == '__main__':
     try:
-        # Start the coordinates-sending function in a separate thread
-        stop_event = threading.Event()
-        coordinates_thread = threading.Thread(target=send_coordinates, args=(stop_event,))
-        coordinates_thread.start()
-
         app.run(host='0.0.0.0', port=8080, debug=True)
     except KeyboardInterrupt:
         logging.info("Shutting down server.")
-    finally:
-        stop_event.set()  # Signal the coordinates thread to stop
-        coordinates_thread.join()  # Wait for the thread to finish
