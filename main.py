@@ -1,16 +1,24 @@
-# This is a sample Python script.
+import subprocess
+import time
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+def run_app_py():
+    """Esegue il comando per avviare app.py in background"""
+    print("Esecuzione di app.py in background...")
+    # Avvia app.py in background
+    subprocess.Popen(["python", "app.py"])
 
+def run_ublox_py():
+    """Esegue il comando per avviare ublox.py"""
+    print("Esecuzione di ublox.py...")
+    subprocess.run(["python", "lib/ublox.py"])
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+if __name__ == "__main__":
+    # Esegui app.py in background
+    run_app_py()
 
+    # Aspetta 15 secondi
+    print("Attendi 15 secondi...")
+    time.sleep(15)
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    # Esegui ublox.py
+    run_ublox_py()
