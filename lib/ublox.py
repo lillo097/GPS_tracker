@@ -1,122 +1,104 @@
-import serial
-import time
-import re
-import requests
-from datetime import datetime
-import serial.tools.list_ports
-import json
+from flask import Flask, request, jsonify, render_template
+from flask_cors import CORS
 import threading
-from queue import Queue  # Importa Queue
+import time
+import psutil  # For system monitoring
+import json
+import requests
+import os
+import logging
+import subprocess
 
-# Funzioni per la conversione e il parsing
-def convert_latitude(lat, direction):
-    if lat:
-        match = re.match(r'(\d{2})(\d{2}\.\d+)', lat)
-        if match:
-            degrees = float(match.group(1))
-            minutes = float(match.group(2))
-            decimal_lat = degrees + minutes / 60.0
-            return decimal_lat if direction == 'N' else -decimal_lat
-    return None
+# Configure logging to show only INFO level (for Localtunnel link and Flask output)
+logging.basicConfig(level=logging.INFO, format="%(message)s")
 
-def convert_longitude(lon, direction):
-    if lon:
-        match = re.match(r'(\d{3})(\d{2}\.\d+)', lon)
-        if match:
-            degrees = float(match.group(1))
-            minutes = float(match.group(2))
-            decimal_lon = degrees + minutes / 60.0
-            return decimal_lon if direction == 'E' else -decimal_lon
-    return None
+app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
-def parse_nmea_sentences(nmea_sentence):
-    data = {}
-    parts = nmea_sentence.split(',')
+# GPS data dictionary with altitude and speed
+gps_data = {
+    'latitude': 0.0,
+    'longitude': 0.0,
+    'altitude': 0.0,  # Initialize to 0.0 or a predefined value
+    'speed_kmh': 0.0  # Initialize to 0.0 or a predefined value
+}
 
-    if len(parts) < 6:
-        print("Riga NMEA incompleta:", nmea_sentence)
-        return None
-
-    if nmea_sentence.startswith('$GNGGA'):
-        if len(parts) >= 10:
-            data['fix_time'] = parts[1]
-            data['latitude'] = convert_latitude(parts[2], parts[3])
-            data['longitude'] = convert_longitude(parts[4], parts[5])
-            data['fix_quality'] = parts[6]
-            data['num_satellites'] = parts[7]
-            data['altitude'] = parts[9]
-    elif nmea_sentence.startswith('$GNRMC'):
-        if len(parts) >= 10:
-            data['fix_time'] = parts[1]
-            data['status'] = parts[2]
-            data['latitude'] = convert_latitude(parts[3], parts[4])
-            data['longitude'] = convert_longitude(parts[5], parts[6])
-            data['speed_over_ground'] = parts[7]
-            data['course_over_ground'] = parts[8]
-            data['date'] = parts[9]
-
-    return data
-
-def print_gps_data(data):
-    print("GPS Data:")
-    for key, value in data.items():
-        print(f"{key.replace('_', ' ').capitalize()}: {value}")
-    print("\n" + "-" * 20 + "\n")
-
-def send_to_flask(data):
-    url = 'http://127.0.0.1:8080/update_coordinates'
-    response = requests.post(url, json=data)
-    if response.status_code == 200:
-        print("Data successfully sent to Flask!")
-    else:
-        print(f"Failed to send data: {response.status_code}")
-
-def write_to_json(data, filename="gps_log.json"):
-    with open(filename, "a") as json_file:
-        json.dump(data, json_file)
-        json_file.write("\n")
-
-# Inizializza la coda per gestire i dati GPS
-q = Queue()
-
-# Impostazione della porta seriale
-ports = serial.tools.list_ports.comports()
-list_of_ports = [port.device for port in ports]
-serial_port = list_of_ports[-1]
-
-try:
-    with serial.Serial(serial_port, baudrate=10250, timeout=1) as ser: #10250
-        ser.reset_input_buffer()
-        print("Listening for GPS data...")
-        index = 0
-        data_batch = []
-
+def start_localtunnel():
+    """Start the Localtunnel process to expose the server publicly."""
+    try:
+        # Run Localtunnel on port 8080
+        lt_process = subprocess.Popen(["lt", "--port", "8080"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         while True:
-            if ser.in_waiting > 0:
-                line = ser.readline().decode('ascii', errors='replace').strip()
-                if line.startswith('$GNGGA') or line.startswith('$GNRMC'):
-                    data = parse_nmea_sentences(line)
-                    if data:
-                        current_time = time.time()
-                        formatted_time = datetime.fromtimestamp(current_time).strftime('%H:%M:%S')
-                        data['time'] = formatted_time
-                        data['index'] = index
-                        print_gps_data(data)
+            output = lt_process.stdout.readline().decode()
+            if "your url is" in output:
+                public_url = output.split("is")[-1].strip()
+                logging.info(f"\nLocaltunnel link: {public_url}\n")
+                break
+    except Exception as e:
+        logging.error(f"Error starting Localtunnel: {e}")
 
-                        # Aggiungi dati alla coda per l'invio a Flask
-                        q.put(data)
-                        send_to_flask(data)
+# Start Localtunnel in a separate thread
+localtunnel_thread = threading.Thread(target=start_localtunnel)
+localtunnel_thread.daemon = True
+localtunnel_thread.start()
 
-                        # Aggiungi dati al batch per JSON
-                        data_batch.append(data)
-                        if len(data_batch) >= 10:
-                            write_to_json(data_batch)
-                            data_batch = []
+@app.route('/')
+def index():
+    return render_template('index_iphone.html')  # Serve HTML from the templates folder
 
-                    index += 1
+@app.route('/update_coordinates', methods=['POST'])
+def update_coordinates():
+    global gps_data
+    data = request.get_json()
+    gps_data.update(data)  # Update GPS data
+    return jsonify({'status': 'success', 'message': 'Coordinates updated'})
+
+@app.route('/get_coordinates', methods=['GET'])
+def get_coordinates():
+    return jsonify(gps_data)
+
+@app.route('/ram_usage', methods=['GET'])
+def ram_usage():
+    """Returns the current RAM usage of the application."""
+    process = psutil.Process()
+    memory_info = process.memory_info()
+    ram_usage = {
+        'rss': memory_info.rss / (1024 * 1024),  # Resident Set Size in MB
+        'percent': process.memory_percent()  # Percentage of RAM used by the process
+    }
+    return jsonify(ram_usage)
+
+def send_coordinates(event):
+    """Send GPS coordinates to the Flask app in a continuous loop."""
+    url = 'http://127.0.0.1:8080/update_coordinates'
+    gps_generator = gps_info(serial_port)  # Assuming serial_port is defined globally
+
+    while not event.is_set():
+        try:
+            gps_data = next(gps_generator)
+            response = requests.post(url, json=gps_data)
+            if response.status_code == 200:
+                logging.info("Coordinates sent successfully.")
             else:
-                print("Buffer vuoto, in attesa di nuovi dati...")
-            time.sleep(0.05)
+                logging.warning(f"Failed to send coordinates. Status: {response.status_code}")
+            event.wait(2)  # Wait for 2 seconds or exit if event is set
+        except (requests.ConnectionError, json.JSONDecodeError) as e:
+            logging.error(f"Error encountered: {e}")
+            event.wait(5)  # Retry after delay on error
+        except StopIteration:
+            logging.error("GPS data generator stopped.")
+            break
 
-except serial.SerialException as e:
-    print(f"Error opening serial port: {e}")
+if __name__ == '__main__':
+    try:
+        # Start the coordinates-sending function in a separate thread
+        stop_event = threading.Event()
+        coordinates_thread = threading.Thread(target=send_coordinates, args=(stop_event,))
+        coordinates_thread.start()
+
+        app.run(host='0.0.0.0', port=8080, debug=True)
+    except KeyboardInterrupt:
+        logging.info("Shutting down server.")
+    finally:
+        stop_event.set()  # Signal the coordinates thread to stop
+        coordinates_thread.join()  # Wait for the thread to finish
