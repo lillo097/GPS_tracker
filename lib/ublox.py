@@ -85,7 +85,7 @@ list_of_ports = [port.device for port in ports]
 serial_port = list_of_ports[-1]
 
 try:
-    with serial.Serial(serial_port, baudrate=115200, timeout=1) as ser: #10250
+    with serial.Serial(serial_port, baudrate=10250, timeout=1) as ser: #10250
         ser.reset_input_buffer()
         print("Listening for GPS data...")
         index = 0
