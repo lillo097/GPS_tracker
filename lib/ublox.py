@@ -64,7 +64,7 @@ def print_gps_data(data):
     print("\n" + "-" * 20 + "\n")
 
 def send_to_flask(data):
-    url = 'http://127.0.0.1:8080/update_coordinates'
+    url = 'http://127.0.0.1:8000/update_coordinates'
     response = requests.post(url, json=data)
     if response.status_code == 200:
         print("Data successfully sent to Flask!")
@@ -76,48 +76,47 @@ def write_to_json(data, filename="gps_log.json"):
         json.dump(data, json_file)
         json_file.write("\n")
 
-# Inizializza la coda per gestire i dati GPS
 q = Queue()
 
-# Impostazione della porta seriale
-# ports = serial.tools.list_ports.comports()
-# list_of_ports = [port.device for port in ports]
-# serial_port = list_of_ports[-1]
-serial_port = '/dev/serial0'
+ports = serial.tools.list_ports.comports()
+list_of_ports = [port.device for port in ports]
+serial_port = list_of_ports[-1]
+#serial_port = '/dev/serial0'
 
-try:
-    with serial.Serial(serial_port, baudrate=115200, timeout=1) as ser: #19200
-        ser.reset_input_buffer()
-        print("Listening for GPS data...")
-        index = 0
-        data_batch = []
+def runUblox():
+    try:
+        with serial.Serial(serial_port, baudrate=57600, timeout=1) as ser: #19200
+            ser.reset_input_buffer()
+            print("Listening for GPS data...")
+            index = 0
+            data_batch = []
 
-        while True:
-            if ser.in_waiting > 0:
-                line = ser.readline().decode('ascii', errors='replace').strip()
-                if line.startswith('$GNGGA') or line.startswith('$GNRMC'):
-                    data = parse_nmea_sentences(line)
-                    if data:
-                        current_time = time.time()
-                        formatted_time = datetime.fromtimestamp(current_time).strftime('%H:%M:%S')
-                        data['time'] = formatted_time
-                        data['index'] = index
-                        print_gps_data(data)
+            while True:
+                if ser.in_waiting > 0:
+                    line = ser.readline().decode('ascii', errors='replace').strip()
+                    if line.startswith('$GNGGA') or line.startswith('$GNRMC'):
+                        data = parse_nmea_sentences(line)
+                        if data:
+                            current_time = time.time()
+                            formatted_time = datetime.fromtimestamp(current_time).strftime('%H:%M:%S')
+                            data['time'] = formatted_time
+                            data['index'] = index
+                            print_gps_data(data)
 
-                        # Aggiungi dati alla coda per l'invio a Flask
-                        q.put(data)
-                        send_to_flask(data)
+                            # Aggiungi dati alla coda per l'invio a Flask
+                            q.put(data)
+                            send_to_flask(data)
 
-                        # Aggiungi dati al batch per JSON
-                        data_batch.append(data)
-                        if len(data_batch) >= 10:
-                            write_to_json(data_batch)
-                            data_batch = []
+                            # Aggiungi dati al batch per JSON
+                            data_batch.append(data)
+                            if len(data_batch) >= 10:
+                                write_to_json(data_batch)
+                                data_batch = []
 
-                    index += 1
-            else:
-                print("Buffer vuoto, in attesa di nuovi dati...")
-            time.sleep(0.01)
+                        index += 1
+                else:
+                    print("Buffer vuoto, in attesa di nuovi dati...")
+                time.sleep(0.01)
 
-except serial.SerialException as e:
-    print(f"Error opening serial port: {e}")
+    except serial.SerialException as e:
+        print(f"Error opening serial port: {e}")
