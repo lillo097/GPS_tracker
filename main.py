@@ -1,24 +1,26 @@
-import subprocess
+import threading
 import time
+from lib.ublox import runUblox
+from lib.app import runApp
 
-def run_app_py():
-    """Esegue il comando per avviare app.py in background"""
-    print("Esecuzione di app.py in background...")
-    # Avvia app.py in background
-    subprocess.Popen(["python", "app.py"])
+def run_flask():
+    # Disabilita il reloader per evitare problemi di threading
+    runApp()
 
-def run_ublox_py():
-    """Esegue il comando per avviare ublox.py"""
-    print("Esecuzione di ublox.py...")
-    subprocess.run(["python", "lib/ublox.py"])
+def run_gps():
+    print("Attendi 15 secondi...")
+    time.sleep(30)
+    runUblox()
 
 if __name__ == "__main__":
-    # Esegui app.py in background
-    run_app_py()
+    # Avvia runApp in un thread separato senza reloader
+    flask_thread = threading.Thread(target=run_flask)
+    flask_thread.start()
 
-    # Aspetta 15 secondi
-    print("Attendi 15 secondi...")
-    time.sleep(15)
+    # Esegui runUblox dopo 15 secondi in un altro thread
+    gps_thread = threading.Thread(target=run_gps)
+    gps_thread.start()
 
-    # Esegui ublox.py
-    run_ublox_py()
+    # Unisci i thread per assicurarsi che entrambi completino l'esecuzione
+    flask_thread.join()
+    gps_thread.join()
