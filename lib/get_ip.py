@@ -32,3 +32,8 @@ def get_ip_from_html(url):
 
     except Exception as e:
         print(f"Si Ã¨ verificato un errore: {e}")
+
+
+
+
+

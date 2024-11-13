@@ -10,6 +10,7 @@ import logging
 import subprocess
 from lib.email_sender import *
 from lib.get_ip import *
+from lib.bypass_tunnel import runBypass
 
 # Configure logging to show only INFO level (for Localtunnel link and Flask output)
 logging.basicConfig(level=logging.INFO, format="%(message)s")
@@ -59,6 +60,7 @@ def start_localtunnel(port, subdomain):
                     # Recupera l'IP dalla funzione get_ip_from_html
                     url = "https://loca.lt/mytunnelpassword"
                     ip = get_ip_from_html(url)
+                    runBypass(public_url)
                     print("ip", ip)
 
                     # Componi e invia l'email con il link del tunnel e l'IP
@@ -114,5 +116,6 @@ def runApp():
         app.run(host='0.0.0.0', port=int(port), debug=False, use_reloader=False)
     except KeyboardInterrupt:
         logging.info("Shutting down server.")
+
 
 
