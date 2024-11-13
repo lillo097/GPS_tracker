@@ -78,10 +78,10 @@ def write_to_json(data, filename="gps_log.json"):
 
 q = Queue()
 
-ports = serial.tools.list_ports.comports()
-list_of_ports = [port.device for port in ports]
-serial_port = list_of_ports[-1]
-#serial_port = '/dev/serial0'
+# ports = serial.tools.list_ports.comports()
+# list_of_ports = [port.device for port in ports]
+# serial_port = list_of_ports[-1]
+serial_port = '/dev/serial0'
 
 def runUblox():
     try:
