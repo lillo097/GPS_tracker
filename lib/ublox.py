@@ -110,7 +110,7 @@ def runUblox():
                             # Aggiungi dati al batch per JSON
                             data_batch.append(data)
                             if len(data_batch) >= 10:
-                                write_to_json(data_batch)
+                                #write_to_json(data_batch)
                                 data_batch = []
 
                         index += 1

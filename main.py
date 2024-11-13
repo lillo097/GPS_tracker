@@ -9,7 +9,7 @@ def run_flask():
 
 def run_gps():
     print("Attendi 15 secondi...")
-    time.sleep(15)
+    time.sleep(30)
     runUblox()
 
 if __name__ == "__main__":
