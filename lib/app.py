@@ -100,7 +100,7 @@ def start_serveo(port):
     try:
         # Avvia il tunnel Serveo sulla porta specificata senza sottodominio
         serveo_process = subprocess.Popen(
-            ["ssh", "-R", f"80:localhost:{port}", "serveo.net"],
+            ["/usr/bin/ssh", "-R", f"80:localhost:{port}", "serveo.net"],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True
@@ -111,35 +111,29 @@ def start_serveo(port):
         # Leggi l'output del processo per trovare l'URL generato
         while True:
             output = serveo_process.stdout.readline()  # Leggi la riga di output
-            if output == '' and serveo_process.poll() is not None:
-                break  # Esci se non c'è più output e il processo è terminato
+           # if output == '' and serveo_process.poll() is not None:
+            #    break  # Esci se non c'è più output e il processo è terminato
 
             # Cerca la riga che contiene l'URL generato
-            if "Forwarding HTTP traffic" in output:
+           # if "Forwarding HTTP traffic" in output:
                 # Estrai il link Serveo dall'output
-                serveo_link = output.split("Forwarding HTTP traffic from")[-1].strip()
+            serveo_link = output.split("Forwarding HTTP traffic from")[-1].strip()
 
-                logging.info(f"\nServeo link: {serveo_link}\n")
+            logging.info(f"\nServeo link: {serveo_link}\n")
 
                 # Invia l'email o esegui altre azioni
-                subject = "Your Serveo Link"
-                body = f"Ciao,\n\nEcco il tuo link al tunnel Serveo: {serveo_link}\n\nSaluti."
-                send_email(subject, body)  # Chiamata alla funzione per inviare email
+            subject = "Your Serveo Link"
+            body = f"Ciao,\n\nEcco il tuo link al tunnel Serveo: {serveo_link}\n\nSaluti"
+            send_email(subject, body)  # Chiamata alla funzione per inviare email
 
-                print(f"Serveo link: {serveo_link}")
-                break  # Interrompe il ciclo dopo aver trovato il primo link
+            print(f"Serveo link: {serveo_link}")
+            break  # Interrompe il ciclo dopo aver trovato il primo link
 
     except Exception as e:
         logging.error(f"Errore durante l'avvio di Serveo: {e}")
 
 
-# Porta da esporre
-port = '8000'
 
-# Avvia Serveo in un thread separato
-serveo_thread = threading.Thread(target=start_serveo, args=(port,))
-serveo_thread.daemon = True
-serveo_thread.start()
 
 
 @app.route('/')
@@ -171,10 +165,19 @@ def get_coordinates():
 #     }
 #     return jsonify(ram_usage)
 
-
+import time
 def runApp():
     try:
+        # Porta da esporre
+        port = '8000'
+# Avvia Serveo in un thread separato
+        
+        serveo_thread = threading.Thread(target=start_serveo, args=(port,))
+        serveo_thread.daemon = True
+        serveo_thread.start()
+        time.sleep(60)
         app.run(host='0.0.0.0', port=int(port), debug=False, use_reloader=False)
+        
     except KeyboardInterrupt:
         logging.info("Shutting down server.")
 
