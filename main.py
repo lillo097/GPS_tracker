@@ -2,31 +2,45 @@ import threading
 import time
 from lib.ublox import runUblox
 from lib.app import runApp
+from lib.serveo_client import runServeoClient
+from lib.local_tunnel_client import runLocaltunnelClient
+import socket
 
-def run_flask():
-    # Disabilita il reloader per evitare problemi di threading
-    
-    #time.sleep(60)
-    runApp()
-
-def run_gps():
-    
-    #time.sleep(30)
-    runUblox()
+def wait_for_internet(host="8.8.8.8", port=53, timeout=3):
+    while True:
+        try:
+            socket.create_connection((host, port), timeout=timeout)
+            print("Internet is available.")
+            break
+        except OSError:
+            print("Waiting for internet...")
+            time.sleep(5)
 
 if __name__ == "__main__":
-    # Avvia runApp in un thread separato senza reloader
-    print("Attendi 60 secondi per avviare correttamente il WI-FI")
-    time.sleep(30)
-    flask_thread = threading.Thread(target=run_flask)
+    print("Waiting for Wi-Fi to initialize...")
+    wait_for_internet()
+
+    print('Running Flask client...')
+    flask_thread = threading.Thread(target=runApp)
     flask_thread.start()
+    time.sleep(10)
 
-    # Esegui runUblox dopo 15 secondi in un altro thread
-    print("Attendi 30 secondi sto avviando il GPS")
+    print("Running Serveo client...")
+    serveo_thread = threading.Thread(target=runServeoClient)
+    serveo_thread.start()
     time.sleep(30)
-    gps_thread = threading.Thread(target=run_gps)
-    gps_thread.start()
+    
+    #print("Running Local Tunnel client...")
+    #lt_thread = threading.Thread(target=runLocaltunnelClient)
+    #lt_thread.start()
+    #time.sleep(30)
+    
 
-    # Unisci i thread per assicurarsi che entrambi completino l'esecuzione
+    print("Starting GPS module...")
+    gps_thread = threading.Thread(target=runUblox)
+    gps_thread.start()
+    time.sleep(10)
+
     flask_thread.join()
+    serveo_thread.join()
     gps_thread.join()

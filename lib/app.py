@@ -26,111 +26,9 @@ gps_data = {
     'speed_kmh': 0.0  # Initialize to 0.0 or a predefined value
 }
 
-localtunnel_link = None  # Variable to store the Localtunnel link
-email_sent = False  # Flag to ensure only one email is sent
-
-
-# def start_localtunnel(port, subdomain):
-#     try:
-#         # Avvia il processo di LocalTunnel con il sottodominio specificato
-#         lt_process = subprocess.Popen(
-#             ["lt", "--port", str(port), "--subdomain", subdomain],
-#             stdout=subprocess.PIPE,
-#             stderr=subprocess.PIPE,
-#             text=True
-#         )
-#
-#         localtunnel_link = None  # Inizializza il link di LocalTunnel
-#
-#         # Legge l'output del processo per trovare l'URL generato
-#         while True:
-#             output = lt_process.stdout.readline()  # Corretto: aggiunte le parentesi
-#             if output == '' and lt_process.poll() is not None:
-#                 break  # Esce se non c'è più output e il processo è terminato
-#
-#             # Cerca la riga che contiene l'URL generato
-#             if "your url is" in output:
-#                 public_url = output.split("is")[-1].strip()
-#
-#                 # Controlla se il link è già stato generato
-#                 if localtunnel_link != public_url:
-#                     localtunnel_link = public_url
-#                     logging.info(f"\nLocaltunnel link: {public_url}\n")
-#
-#                     # Recupera l'IP dalla funzione get_ip_from_html
-#                     url = "https://loca.lt/mytunnelpassword"
-#                     ip = get_ip_from_html(url)
-#                     runBypass(public_url)
-#                     print("ip", ip)
-#
-#                     # Componi e invia l'email con il link del tunnel e l'IP
-#                     subject = "Your Localtunnel Link"
-#                     body = f"Ciao,\n\nEcco il tuo link al tunnel Localtunnel: {public_url}\n\nIndirizzo IP: {ip}\n\nSaluti."
-#                     send_email(subject, body)
-#
-#                     break  # Interrompe il ciclo dopo aver trovato il primo link
-#
-#     except Exception as e:
-#         logging.error(f"Errore durante l'avvio di Localtunnel: {e}")
-#
-#
-# port = '8000'
-# # Start Localtunnel in a separate thread
-# localtunnel_thread = threading.Thread(target=start_localtunnel(port, 'halloooooohdhhddh'))
-# localtunnel_thread.daemon = True
 # localtunnel_thread.start()
 
 
-
-
-
-
-import subprocess
-import threading
-import logging
-
-# Funzione per avviare Serveo
-import subprocess
-import threading
-import logging
-
-
-# Funzione per avviare Serveo senza specificare il sottodominio
-def start_serveo(port):
-    try:
-        # Avvia il tunnel Serveo sulla porta specificata senza sottodominio
-        serveo_process = subprocess.Popen(
-            ["/usr/bin/ssh", "-R", f"80:localhost:{port}", "serveo.net"],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True
-        )
-
-        serveo_link = None  # Inizializza il link di Serveo
-
-        # Leggi l'output del processo per trovare l'URL generato
-        while True:
-            output = serveo_process.stdout.readline()  # Leggi la riga di output
-           # if output == '' and serveo_process.poll() is not None:
-            #    break  # Esci se non c'è più output e il processo è terminato
-
-            # Cerca la riga che contiene l'URL generato
-           # if "Forwarding HTTP traffic" in output:
-                # Estrai il link Serveo dall'output
-            serveo_link = output.split("Forwarding HTTP traffic from")[-1].strip()
-
-            logging.info(f"\nServeo link: {serveo_link}\n")
-
-                # Invia l'email o esegui altre azioni
-            subject = "Your Serveo Link"
-            body = f"Ciao,\n\nEcco il tuo link al tunnel Serveo: {serveo_link}\n\nSaluti"
-            send_email(subject, body)  # Chiamata alla funzione per inviare email
-
-            print(f"Serveo link: {serveo_link}")
-            break  # Interrompe il ciclo dopo aver trovato il primo link
-
-    except Exception as e:
-        logging.error(f"Errore durante l'avvio di Serveo: {e}")
 
 
 
@@ -171,11 +69,6 @@ def runApp():
         # Porta da esporre
         port = '8000'
 # Avvia Serveo in un thread separato
-        
-        serveo_thread = threading.Thread(target=start_serveo, args=(port,))
-        serveo_thread.daemon = True
-        serveo_thread.start()
-        time.sleep(60)
         app.run(host='0.0.0.0', port=int(port), debug=False, use_reloader=False)
         
     except KeyboardInterrupt:
