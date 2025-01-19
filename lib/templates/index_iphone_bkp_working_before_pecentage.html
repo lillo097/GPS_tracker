@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time GPS Tracker</title>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet" />
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+        #map {
+            width: 90vw;
+            height: 70vh;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        #info {
+            width: 70vw;
+            margin-top: 10px;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            color: #333;
+            background: #fff;
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        #info strong {
+            display: inline-block;
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div id="info">
+        <div><strong>Latitude:</strong> <span id="latitude">Loading...</span></div>
+        <div><strong>Longitude:</strong> <span id="longitude">Loading...</span></div>
+        <div><strong>Speed:</strong> <span id="speed">Loading...</span> km/h</div>
+        <div><strong>Course:</strong> <span id="course">Loading...</span>°</div>
+        <div><strong>Altitude:</strong> <span id="altitude">Loading...</span> m</div>
+        <div><strong>Satellites:</strong> <span id="satellites">Loading...</span></div>
+    </div>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoibGlsbG8wOTciLCJhIjoiY20yOTZpamprMDB1djJqczd5ZzdlazR0YyJ9.Sro2dK6MfaSyBeZzBXmDSw';
+
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [0, 0],
+            zoom: 2
+        });
+
+        let marker = new mapboxgl.Marker().setLngLat([0, 0]).addTo(map);
+        let lastCoordinates = [0, 0];
+
+        async function updateCoordinates() {
+            try {
+                const response = await fetch('/get_coordinates');
+                const data = await response.json();
+
+                const newLngLat = [parseFloat(data.longitude), parseFloat(data.latitude)];
+
+                // Update map marker position and auto-center
+                if (newLngLat[0] !== lastCoordinates[0] || newLngLat[1] !== lastCoordinates[1]) {
+                    marker.setLngLat(newLngLat); // Move the marker
+                    map.setCenter(newLngLat); // Auto-center map
+                    lastCoordinates = newLngLat;
+                }
+
+                // Update the information display
+                document.getElementById('latitude').textContent = data.latitude || "N/A";
+                document.getElementById('longitude').textContent = data.longitude || "N/A";
+                document.getElementById('speed').textContent = (data.speed_over_ground || 0).toFixed(2);
+                document.getElementById('course').textContent = (data.course_over_ground || 0).toFixed(2);
+                document.getElementById('altitude').textContent = (data.altitude || 0).toFixed(2);
+                document.getElementById('satellites').textContent = data.num_satellites || "N/A";
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+
+            // Request next update
+            requestAnimationFrame(updateCoordinates);
+        }
+
+        // Start updating coordinates
+        updateCoordinates();
+    </script>
+</body>
+</html>

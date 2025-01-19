@@ -3,12 +3,13 @@ import time
 import re
 import requests
 from datetime import datetime
-import serial.tools.list_ports
 import json
-import threading
-from queue import Queue  # Importa Queue
+from queue import Queue
+import os
+from lib.multimeter import *
+#from multimeter import *
 
-# Funzioni per la conversione e il parsing
+# Conversion and parsing functions
 def convert_latitude(lat, direction):
     if lat:
         match = re.match(r'(\d{2})(\d{2}\.\d+)', lat)
@@ -37,23 +38,39 @@ def parse_nmea_sentences(nmea_sentence):
         print("Riga NMEA incompleta:", nmea_sentence)
         return None
 
+    def safe_float(value, default=0.0):
+        try:
+            return float(value) if value.strip() else default
+        except ValueError:
+            return default
+
+    def safe_int(value, default=0):
+        try:
+            return int(value) if value.strip() else default
+        except ValueError:
+            return default
+    
     if nmea_sentence.startswith('$GNGGA'):
         if len(parts) >= 10:
             data['fix_time'] = parts[1]
             data['latitude'] = convert_latitude(parts[2], parts[3])
             data['longitude'] = convert_longitude(parts[4], parts[5])
             data['fix_quality'] = parts[6]
-            data['num_satellites'] = parts[7]
-            data['altitude'] = parts[9]
+            data['num_satellites'] = safe_int(parts[7])
+            data['altitude'] = safe_float(parts[9])
+            data['speed_over_ground'] = None
+            data['course_over_ground'] = None
     elif nmea_sentence.startswith('$GNRMC'):
         if len(parts) >= 10:
             data['fix_time'] = parts[1]
             data['status'] = parts[2]
             data['latitude'] = convert_latitude(parts[3], parts[4])
             data['longitude'] = convert_longitude(parts[5], parts[6])
-            data['speed_over_ground'] = parts[7]
-            data['course_over_ground'] = parts[8]
+            data['speed_over_ground'] = safe_float(parts[7]) * 1.852
+            data['course_over_ground'] = safe_float(parts[8])
             data['date'] = parts[9]
+            data['num_satellites'] = None
+        data['altitude'] = None
 
     return data
 
@@ -62,34 +79,96 @@ def print_gps_data(data):
     for key, value in data.items():
         print(f"{key.replace('_', ' ').capitalize()}: {value}")
     print("\n" + "-" * 20 + "\n")
-
+    
+port = 8080
 def send_to_flask(data):
-    url = 'http://127.0.0.1:8000/update_coordinates'
+    url = f'http://127.0.0.1:{port}/update_coordinates'
     response = requests.post(url, json=data)
-    if response.status_code == 200:
-        print("Data successfully sent to Flask!")
-    else:
-        print(f"Failed to send data: {response.status_code}")
+    #if response.status_code == 200:
+        #print("Data successfully sent to Flask!")
+    #else:
+        #print(f"Failed to send data: {response.status_code}")
 
 def write_to_json(data, filename="gps_log.json"):
     with open(filename, "a") as json_file:
         json.dump(data, json_file)
         json_file.write("\n")
 
-q = Queue()
+# Define a dictionary to store the current state of GPS data
+current_data = {
+    "latitude": None,
+    "longitude": None,
+    "speed_over_ground": None,
+    "course_over_ground": None,
+    "altitude": None,
+    "num_satellites": None,
+}
 
-# ports = serial.tools.list_ports.comports()
-# list_of_ports = [port.device for port in ports]
-# serial_port = list_of_ports[-1]
-serial_port = '/dev/serial0'
+# Function to check if all required fields are populated
+def is_data_complete(data):
+    required_fields = ["latitude", "longitude", "speed_over_ground", "course_over_ground", "altitude", "num_satellites"]
+    return all(data.get(field) is not None for field in required_fields)
+
+def process_gps_data(data):
+    global current_data
+
+    # Update current data with the new values
+    for key, value in data.items():
+        if key in current_data and value is not None:
+            current_data[key] = value
+
+    # Immediately send latitude and longitude
+    if current_data["latitude"] is not None and current_data["longitude"] is not None:
+        send_to_flask({
+            "latitude": current_data["latitude"],
+            "longitude": current_data["longitude"]
+        })
+    
+    if isinstance(data['voltage'], float):
+        
+        send_to_flask({
+        "voltage": data['voltage'],
+        "current": data['current'],
+        "avg_voltage": data['avg_voltage']
+    })
+        
+
+    # Check if the data is complete
+    if is_data_complete(current_data):
+        # Send the complete data and clear the buffer
+        send_to_flask(current_data)
+       # write_to_json(current_data)  # Optionally log data
+        #print_gps_data(current_data)
+        
+        # Reset current data after sending
+        current_data = {key: None for key in current_data}
+        
+def calculate_battery_percentage(voltage_avg, max_voltage=4.2, min_voltage=2.5):
+    if voltage_avg <= min_voltage:
+        return 0.0
+    elif voltage_avg >= max_voltage:
+        return 100.0
+    else:
+        return int(((voltage_avg - min_voltage) / (max_voltage - min_voltage)) * 100.0)
+        
+
+# Serial port for the GPS module
+serial_port = '/dev/serial0'  # Adjust this for your system
+
+file_json = 'multimeter_data.json'
+if os.path.exists(file_json):
+    os.remove(file_json)
 
 def runUblox():
+    
     try:
-        with serial.Serial(serial_port, baudrate=57600, timeout=1) as ser: #19200
+        with serial.Serial(serial_port, baudrate=57600, timeout=1) as ser:  # Adjust baud rate as needed
             ser.reset_input_buffer()
-            print("Listening for GPS data...")
+            #print("Listening for GPS data...")
             index = 0
-            data_batch = []
+            v = 0
+            c = 0
+            i = 0
 
             while True:
                 if ser.in_waiting > 0:
@@ -97,26 +176,64 @@ def runUblox():
                     if line.startswith('$GNGGA') or line.startswith('$GNRMC'):
                         data = parse_nmea_sentences(line)
                         if data:
+                            
                             current_time = time.time()
                             formatted_time = datetime.fromtimestamp(current_time).strftime('%H:%M:%S')
                             data['time'] = formatted_time
                             data['index'] = index
-                            print_gps_data(data)
 
-                            # Aggiungi dati alla coda per l'invio a Flask
-                            q.put(data)
-                            send_to_flask(data)
-
-                            # Aggiungi dati al batch per JSON
-                            data_batch.append(data)
-                            if len(data_batch) >= 10:
-                                #write_to_json(data_batch)
-                                data_batch = []
-
-                        index += 1
-                else:
-                    print("Buffer vuoto, in attesa di nuovi dati...")
+                            voltage, current = run_multimeter()
+                            
+                            v = v + voltage
+                            c = c + current
+                            
+                            if i == 500:
+                                i = 0
+                                i += 1
+                                v = voltage
+                                c = current
+                            else:     
+                                i += 1
+                          
+                            #write data on json to send to Flaask
+                            data['voltage'] = round(voltage/3, 2)
+                            data['current'] = round(voltage/3, 2)
+                            data['avg_voltage'] = calculate_battery_percentage((v/3)/i)
+                            
+                            print('iteration: ', index)
+                            if index % 1000 == 0:#write data to store on local
+                                print('----------------------------------------------------------> writing into json...')
+                                try:
+                                    with open('battery_data.json', 'r') as f:
+                                        dati = json.load(f)
+                                except FileNotFoundError:
+                                    dati = []
+                                    
+                                nuovo_dato = {
+                                    "tensione": round(voltage/3, 2),
+                                    "corrente": round(current, 2),
+                                    "data_ora": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                                }
+                                dati.append(nuovo_dato)
+                                            
+                                with open('battery_data.json', 'w') as f:
+                                    json.dump(dati, f, indent=4)
+                            
+                            print('voltage: ', round(voltage/3, 2))
+                            print('current: ', round(current, 2))
+                            print('avg voltage: ', round((v/3)/i, 2))
+                            print('avg current: ', round(c/i, 2))
+                            print(calculate_battery_percentage((v/3)/i),'%')
+                            print('-' * 50)
+                        
+                            process_gps_data(data)
+                            index += 1
+                #else:
+                    #print("Buffer vuoto, in attesa di nuovi dati...")
                 time.sleep(0.01)
+                #time.sleep(60)
 
     except serial.SerialException as e:
         print(f"Error opening serial port: {e}")
+
+#runUblox()
