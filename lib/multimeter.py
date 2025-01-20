@@ -34,7 +34,7 @@ def initialize_ina226():
 
     # Calibration value: adjust based on shunt resistor value and expected current range
     # For example, using a 0.1-ohm shunt resistor and a max current of 2A:
-    calibration_value = int(0.00512 / (0.1 * 0.001))  # Example calculation
+    calibration_value = int(0.00512 / (0.1 * (0.5/32768)))  # Example calculation
     write_register(INA226_REG_CALIBRATION, calibration_value)
 
 def read_voltage_current():
@@ -44,7 +44,7 @@ def read_voltage_current():
     
     # Convert raw values to meaningful units
    # bus_voltage = (bus_voltage_raw * 1.25e-3) + 0.02  # Voltage in volts (1.25 mV per LSB)
-    bus_voltage = (bus_voltage_raw * 1.25e-3) + 0.10 #+ 0.230
+    bus_voltage = (bus_voltage_raw * 1.25e-3) + 0.80 #+ 0.230
     shunt_voltage = shunt_voltage_raw * 2.5e-6  # Voltage in volts (2.5 uV per LSB)
 
     # Current calculation depends on calibration value; for simplicity:

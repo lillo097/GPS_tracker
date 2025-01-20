@@ -196,9 +196,9 @@ def runUblox():
                                 i += 1
                           
                             #write data on json to send to Flaask
-                            data['voltage'] = round(voltage/3, 2)
-                            data['current'] = round(voltage/3, 2)
-                            data['avg_voltage'] = calculate_battery_percentage((v/3)/i)
+                            data['voltage'] = round(voltage/2, 2)
+                            data['current'] = round(voltage/2, 2)
+                            data['avg_voltage'] = calculate_battery_percentage((v/2)/i)
                             
                             print('iteration: ', index)
                             if index % 1000 == 0:#write data to store on local
@@ -210,7 +210,7 @@ def runUblox():
                                     dati = []
                                     
                                 nuovo_dato = {
-                                    "tensione": round(voltage/3, 2),
+                                    "tensione": round(voltage/2, 2),
                                     "corrente": round(current, 2),
                                     "data_ora": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                                 }
@@ -219,11 +219,11 @@ def runUblox():
                                 with open('battery_data.json', 'w') as f:
                                     json.dump(dati, f, indent=4)
                             
-                            print('voltage: ', round(voltage/3, 2))
+                            print('voltage: ', round(voltage/2, 2))
                             print('current: ', round(current, 2))
-                            print('avg voltage: ', round((v/3)/i, 2))
+                            print('avg voltage: ', round((v/2)/i, 2))
                             print('avg current: ', round(c/i, 2))
-                            print(calculate_battery_percentage((v/3)/i),'%')
+                            print(calculate_battery_percentage((v/2)/i),'%')
                             print('-' * 50)
                         
                             process_gps_data(data)

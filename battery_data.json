@@ -1,737 +1,882 @@
 [
     {
-        "tensione": 3.91,
-        "corrente": 0.19,
-        "data_ora": "2025-01-18 19:02:28"
-    },
-    {
-        "tensione": 3.93,
-        "corrente": 0.19,
-        "data_ora": "2025-01-18 19:06:39"
-    },
-    {
-        "tensione": 3.92,
-        "corrente": 0.19,
-        "data_ora": "2025-01-18 19:17:26"
-    },
-    {
-        "tensione": 3.91,
-        "corrente": 0.19,
-        "data_ora": "2025-01-18 19:25:46"
-    },
-    {
-        "tensione": 3.9,
-        "corrente": 0.19,
-        "data_ora": "2025-01-18 19:31:58"
-    },
-    {
-        "tensione": 3.89,
-        "corrente": 0.19,
-        "data_ora": "2025-01-18 19:40:18"
-    },
-    {
-        "tensione": 3.89,
-        "corrente": 0.19,
-        "data_ora": "2025-01-18 19:45:31"
-    },
-    {
-        "tensione": 3.88,
-        "corrente": 0.2,
-        "data_ora": "2025-01-18 19:53:51"
-    },
-    {
-        "tensione": 4.19,
-        "corrente": 0.18,
-        "data_ora": "2025-01-19 02:25:48"
-    },
-    {
-        "tensione": 4.17,
-        "corrente": 0.22,
-        "data_ora": "2025-01-19 02:34:08"
-    },
-    {
-        "tensione": 4.17,
-        "corrente": 0.18,
-        "data_ora": "2025-01-19 02:42:28"
-    },
-    {
-        "tensione": 4.16,
-        "corrente": 0.18,
-        "data_ora": "2025-01-19 02:50:48"
-    },
-    {
-        "tensione": 4.15,
-        "corrente": 0.18,
-        "data_ora": "2025-01-19 02:59:08"
-    },
-    {
-        "tensione": 4.14,
-        "corrente": 0.18,
-        "data_ora": "2025-01-19 03:07:28"
-    },
-    {
-        "tensione": 4.13,
-        "corrente": 0.18,
-        "data_ora": "2025-01-19 03:15:48"
-    },
-    {
-        "tensione": 4.12,
-        "corrente": 0.21,
-        "data_ora": "2025-01-19 03:24:08"
-    },
-    {
-        "tensione": 4.11,
-        "corrente": 0.2,
-        "data_ora": "2025-01-19 03:32:28"
-    },
-    {
-        "tensione": 4.11,
-        "corrente": 0.18,
-        "data_ora": "2025-01-19 03:40:48"
-    },
-    {
-        "tensione": 4.1,
-        "corrente": 0.18,
-        "data_ora": "2025-01-19 03:49:08"
-    },
-    {
-        "tensione": 4.09,
-        "corrente": 0.18,
-        "data_ora": "2025-01-19 03:57:28"
-    },
-    {
-        "tensione": 4.09,
-        "corrente": 0.18,
-        "data_ora": "2025-01-19 04:05:48"
-    },
-    {
-        "tensione": 4.08,
-        "corrente": 0.18,
-        "data_ora": "2025-01-19 04:14:08"
-    },
-    {
-        "tensione": 4.07,
-        "corrente": 0.18,
-        "data_ora": "2025-01-19 04:22:28"
-    },
-    {
-        "tensione": 4.06,
-        "corrente": 0.18,
-        "data_ora": "2025-01-19 04:30:48"
-    },
-    {
-        "tensione": 4.05,
-        "corrente": 0.23,
-        "data_ora": "2025-01-19 04:39:08"
-    },
-    {
-        "tensione": 4.04,
-        "corrente": 0.2,
-        "data_ora": "2025-01-19 04:47:28"
-    },
-    {
-        "tensione": 4.04,
-        "corrente": 0.18,
-        "data_ora": "2025-01-19 04:55:48"
-    },
-    {
-        "tensione": 4.03,
-        "corrente": 0.21,
-        "data_ora": "2025-01-19 05:04:08"
-    },
-    {
-        "tensione": 4.03,
-        "corrente": 0.18,
-        "data_ora": "2025-01-19 05:12:28"
-    },
-    {
-        "tensione": 4.02,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 05:20:48"
-    },
-    {
-        "tensione": 4.01,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 05:29:08"
-    },
-    {
-        "tensione": 4.0,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 05:37:28"
-    },
-    {
-        "tensione": 4.0,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 05:45:48"
+        "tensione": 3.86,
+        "corrente": 0.4,
+        "data_ora": "2025-01-19 23:38:03"
     },
     {
         "tensione": 3.99,
-        "corrente": 0.2,
-        "data_ora": "2025-01-19 05:54:08"
+        "corrente": 0.29,
+        "data_ora": "2025-01-19 23:43:34"
     },
     {
-        "tensione": 3.98,
-        "corrente": 0.2,
-        "data_ora": "2025-01-19 06:02:28"
+        "tensione": 4.07,
+        "corrente": 0.29,
+        "data_ora": "2025-01-19 23:50:33"
     },
     {
-        "tensione": 3.97,
-        "corrente": 0.21,
-        "data_ora": "2025-01-19 06:10:48"
+        "tensione": 4.1,
+        "corrente": 0.29,
+        "data_ora": "2025-01-19 23:55:21"
     },
     {
-        "tensione": 3.96,
-        "corrente": 0.27,
-        "data_ora": "2025-01-19 06:19:08"
-    },
-    {
-        "tensione": 3.95,
-        "corrente": 0.22,
-        "data_ora": "2025-01-19 06:27:28"
-    },
-    {
-        "tensione": 3.95,
-        "corrente": 0.2,
-        "data_ora": "2025-01-19 06:35:48"
-    },
-    {
-        "tensione": 3.95,
-        "corrente": 0.24,
-        "data_ora": "2025-01-19 06:44:08"
-    },
-    {
-        "tensione": 3.94,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 06:52:28"
-    },
-    {
-        "tensione": 3.93,
-        "corrente": 0.23,
-        "data_ora": "2025-01-19 07:00:48"
-    },
-    {
-        "tensione": 3.92,
-        "corrente": 0.25,
-        "data_ora": "2025-01-19 07:09:08"
-    },
-    {
-        "tensione": 3.91,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 07:17:28"
-    },
-    {
-        "tensione": 3.91,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 07:25:48"
-    },
-    {
-        "tensione": 3.9,
-        "corrente": 0.2,
-        "data_ora": "2025-01-19 07:34:08"
-    },
-    {
-        "tensione": 3.89,
-        "corrente": 0.22,
-        "data_ora": "2025-01-19 07:42:28"
-    },
-    {
-        "tensione": 3.88,
-        "corrente": 0.2,
-        "data_ora": "2025-01-19 07:50:48"
-    },
-    {
-        "tensione": 3.87,
-        "corrente": 0.23,
-        "data_ora": "2025-01-19 07:59:08"
-    },
-    {
-        "tensione": 3.87,
-        "corrente": 0.25,
-        "data_ora": "2025-01-19 08:07:28"
-    },
-    {
-        "tensione": 3.85,
-        "corrente": 0.24,
-        "data_ora": "2025-01-19 08:15:48"
-    },
-    {
-        "tensione": 3.84,
-        "corrente": 0.22,
-        "data_ora": "2025-01-19 08:24:08"
-    },
-    {
-        "tensione": 3.84,
-        "corrente": 0.2,
-        "data_ora": "2025-01-19 08:32:28"
-    },
-    {
-        "tensione": 3.82,
-        "corrente": 0.23,
-        "data_ora": "2025-01-19 08:40:48"
-    },
-    {
-        "tensione": 3.82,
-        "corrente": 0.2,
-        "data_ora": "2025-01-19 08:49:08"
-    },
-    {
-        "tensione": 3.81,
-        "corrente": 0.2,
-        "data_ora": "2025-01-19 08:57:28"
-    },
-    {
-        "tensione": 3.8,
-        "corrente": 0.23,
-        "data_ora": "2025-01-19 09:05:48"
-    },
-    {
-        "tensione": 3.79,
-        "corrente": 0.2,
-        "data_ora": "2025-01-19 09:14:08"
-    },
-    {
-        "tensione": 3.79,
-        "corrente": 0.2,
-        "data_ora": "2025-01-19 09:22:28"
-    },
-    {
-        "tensione": 3.78,
-        "corrente": 0.22,
-        "data_ora": "2025-01-19 09:30:48"
-    },
-    {
-        "tensione": 3.77,
-        "corrente": 0.22,
-        "data_ora": "2025-01-19 09:39:08"
-    },
-    {
-        "tensione": 3.76,
-        "corrente": 0.23,
-        "data_ora": "2025-01-19 09:47:28"
-    },
-    {
-        "tensione": 3.76,
-        "corrente": 0.23,
-        "data_ora": "2025-01-19 09:55:48"
-    },
-    {
-        "tensione": 3.74,
-        "corrente": 0.27,
-        "data_ora": "2025-01-19 10:04:08"
+        "tensione": 4.1,
+        "corrente": 0.29,
+        "data_ora": "2025-01-20 00:03:41"
     },
     {
         "tensione": 3.75,
-        "corrente": 0.24,
-        "data_ora": "2025-01-19 10:12:28"
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 00:08:59"
+    },
+    {
+        "tensione": 4.15,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 00:14:08"
+    },
+    {
+        "tensione": 4.13,
+        "corrente": 0.35,
+        "data_ora": "2025-01-20 00:17:33"
+    },
+    {
+        "tensione": 4.22,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 01:26:36"
+    },
+    {
+        "tensione": 4.21,
+        "corrente": 0.32,
+        "data_ora": "2025-01-20 01:30:04"
+    },
+    {
+        "tensione": 4.19,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 01:38:24"
+    },
+    {
+        "tensione": 4.19,
+        "corrente": 0.25,
+        "data_ora": "2025-01-20 01:46:45"
+    },
+    {
+        "tensione": 4.17,
+        "corrente": 0.29,
+        "data_ora": "2025-01-20 01:55:05"
+    },
+    {
+        "tensione": 4.16,
+        "corrente": 0.26,
+        "data_ora": "2025-01-20 02:03:25"
+    },
+    {
+        "tensione": 4.15,
+        "corrente": 0.26,
+        "data_ora": "2025-01-20 02:11:45"
+    },
+    {
+        "tensione": 4.14,
+        "corrente": 0.26,
+        "data_ora": "2025-01-20 02:20:05"
+    },
+    {
+        "tensione": 4.12,
+        "corrente": 0.26,
+        "data_ora": "2025-01-20 02:28:25"
+    },
+    {
+        "tensione": 4.11,
+        "corrente": 0.27,
+        "data_ora": "2025-01-20 02:36:45"
+    },
+    {
+        "tensione": 4.1,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 02:45:05"
+    },
+    {
+        "tensione": 4.11,
+        "corrente": 0.26,
+        "data_ora": "2025-01-20 02:53:25"
+    },
+    {
+        "tensione": 4.1,
+        "corrente": 0.29,
+        "data_ora": "2025-01-20 03:01:45"
+    },
+    {
+        "tensione": 4.08,
+        "corrente": 0.29,
+        "data_ora": "2025-01-20 03:10:05"
+    },
+    {
+        "tensione": 4.09,
+        "corrente": 0.27,
+        "data_ora": "2025-01-20 03:18:25"
+    },
+    {
+        "tensione": 4.08,
+        "corrente": 0.29,
+        "data_ora": "2025-01-20 03:26:45"
+    },
+    {
+        "tensione": 4.08,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 03:35:05"
+    },
+    {
+        "tensione": 4.08,
+        "corrente": 0.33,
+        "data_ora": "2025-01-20 03:43:25"
+    },
+    {
+        "tensione": 4.06,
+        "corrente": 0.29,
+        "data_ora": "2025-01-20 03:51:45"
+    },
+    {
+        "tensione": 4.08,
+        "corrente": 0.27,
+        "data_ora": "2025-01-20 04:00:05"
+    },
+    {
+        "tensione": 4.06,
+        "corrente": 0.34,
+        "data_ora": "2025-01-20 04:08:25"
+    },
+    {
+        "tensione": 4.06,
+        "corrente": 0.37,
+        "data_ora": "2025-01-20 04:16:45"
+    },
+    {
+        "tensione": 4.06,
+        "corrente": 0.38,
+        "data_ora": "2025-01-20 04:25:05"
+    },
+    {
+        "tensione": 4.06,
+        "corrente": 0.29,
+        "data_ora": "2025-01-20 04:33:25"
+    },
+    {
+        "tensione": 4.06,
+        "corrente": 0.38,
+        "data_ora": "2025-01-20 04:41:45"
+    },
+    {
+        "tensione": 4.07,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 04:50:05"
+    },
+    {
+        "tensione": 4.04,
+        "corrente": 0.38,
+        "data_ora": "2025-01-20 04:58:25"
+    },
+    {
+        "tensione": 4.05,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 05:06:45"
+    },
+    {
+        "tensione": 4.05,
+        "corrente": 0.35,
+        "data_ora": "2025-01-20 05:15:05"
+    },
+    {
+        "tensione": 4.05,
+        "corrente": 0.27,
+        "data_ora": "2025-01-20 05:23:25"
+    },
+    {
+        "tensione": 4.05,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 05:31:45"
+    },
+    {
+        "tensione": 4.04,
+        "corrente": 0.43,
+        "data_ora": "2025-01-20 05:40:05"
+    },
+    {
+        "tensione": 4.05,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 05:48:25"
+    },
+    {
+        "tensione": 4.04,
+        "corrente": 0.29,
+        "data_ora": "2025-01-20 05:56:45"
+    },
+    {
+        "tensione": 4.05,
+        "corrente": 0.27,
+        "data_ora": "2025-01-20 06:05:05"
+    },
+    {
+        "tensione": 4.04,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 06:13:25"
+    },
+    {
+        "tensione": 4.06,
+        "corrente": 0.29,
+        "data_ora": "2025-01-20 06:21:45"
+    },
+    {
+        "tensione": 4.06,
+        "corrente": 0.36,
+        "data_ora": "2025-01-20 06:30:05"
+    },
+    {
+        "tensione": 4.03,
+        "corrente": 0.35,
+        "data_ora": "2025-01-20 06:38:25"
+    },
+    {
+        "tensione": 4.03,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 06:46:45"
+    },
+    {
+        "tensione": 4.04,
+        "corrente": 0.29,
+        "data_ora": "2025-01-20 06:55:05"
+    },
+    {
+        "tensione": 4.04,
+        "corrente": 0.36,
+        "data_ora": "2025-01-20 07:03:25"
+    },
+    {
+        "tensione": 4.03,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 07:11:45"
+    },
+    {
+        "tensione": 4.04,
+        "corrente": 0.37,
+        "data_ora": "2025-01-20 07:20:05"
+    },
+    {
+        "tensione": 4.04,
+        "corrente": 0.38,
+        "data_ora": "2025-01-20 07:28:25"
+    },
+    {
+        "tensione": 4.04,
+        "corrente": 0.36,
+        "data_ora": "2025-01-20 07:36:45"
+    },
+    {
+        "tensione": 4.04,
+        "corrente": 0.33,
+        "data_ora": "2025-01-20 07:45:05"
+    },
+    {
+        "tensione": 4.04,
+        "corrente": 0.37,
+        "data_ora": "2025-01-20 07:53:25"
+    },
+    {
+        "tensione": 4.04,
+        "corrente": 0.34,
+        "data_ora": "2025-01-20 08:01:45"
+    },
+    {
+        "tensione": 4.04,
+        "corrente": 0.35,
+        "data_ora": "2025-01-20 08:10:05"
+    },
+    {
+        "tensione": 4.05,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 08:18:25"
+    },
+    {
+        "tensione": 4.04,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 08:26:45"
+    },
+    {
+        "tensione": 4.04,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 08:35:05"
+    },
+    {
+        "tensione": 4.04,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 08:43:25"
+    },
+    {
+        "tensione": 4.04,
+        "corrente": 0.43,
+        "data_ora": "2025-01-20 08:51:45"
+    },
+    {
+        "tensione": 4.03,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 09:00:05"
+    },
+    {
+        "tensione": 4.03,
+        "corrente": 0.29,
+        "data_ora": "2025-01-20 09:08:25"
+    },
+    {
+        "tensione": 4.03,
+        "corrente": 0.27,
+        "data_ora": "2025-01-20 09:16:45"
+    },
+    {
+        "tensione": 4.04,
+        "corrente": 0.29,
+        "data_ora": "2025-01-20 09:25:05"
+    },
+    {
+        "tensione": 4.04,
+        "corrente": 0.27,
+        "data_ora": "2025-01-20 09:33:25"
+    },
+    {
+        "tensione": 4.03,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 09:41:45"
+    },
+    {
+        "tensione": 4.03,
+        "corrente": 0.34,
+        "data_ora": "2025-01-20 09:50:05"
+    },
+    {
+        "tensione": 4.04,
+        "corrente": 0.29,
+        "data_ora": "2025-01-20 09:58:25"
+    },
+    {
+        "tensione": 4.03,
+        "corrente": 0.34,
+        "data_ora": "2025-01-20 10:06:45"
+    },
+    {
+        "tensione": 4.03,
+        "corrente": 0.34,
+        "data_ora": "2025-01-20 10:15:05"
+    },
+    {
+        "tensione": 4.03,
+        "corrente": 0.27,
+        "data_ora": "2025-01-20 10:23:25"
+    },
+    {
+        "tensione": 4.02,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 10:31:45"
+    },
+    {
+        "tensione": 4.01,
+        "corrente": 0.37,
+        "data_ora": "2025-01-20 10:40:05"
+    },
+    {
+        "tensione": 4.02,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 10:48:25"
+    },
+    {
+        "tensione": 4.02,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 10:56:45"
+    },
+    {
+        "tensione": 4.01,
+        "corrente": 0.27,
+        "data_ora": "2025-01-20 11:05:05"
+    },
+    {
+        "tensione": 4.01,
+        "corrente": 0.27,
+        "data_ora": "2025-01-20 11:13:25"
+    },
+    {
+        "tensione": 4.0,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 11:21:45"
+    },
+    {
+        "tensione": 4.01,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 11:30:05"
+    },
+    {
+        "tensione": 4.02,
+        "corrente": 0.27,
+        "data_ora": "2025-01-20 11:38:25"
+    },
+    {
+        "tensione": 4.0,
+        "corrente": 0.27,
+        "data_ora": "2025-01-20 11:46:45"
+    },
+    {
+        "tensione": 3.99,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 11:55:05"
+    },
+    {
+        "tensione": 4.0,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 12:03:25"
+    },
+    {
+        "tensione": 4.0,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 12:11:45"
+    },
+    {
+        "tensione": 4.0,
+        "corrente": 0.27,
+        "data_ora": "2025-01-20 12:20:05"
+    },
+    {
+        "tensione": 3.99,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 12:28:25"
+    },
+    {
+        "tensione": 3.99,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 12:36:45"
+    },
+    {
+        "tensione": 3.98,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 12:45:05"
+    },
+    {
+        "tensione": 3.98,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 12:53:25"
+    },
+    {
+        "tensione": 3.97,
+        "corrente": 0.27,
+        "data_ora": "2025-01-20 13:01:45"
+    },
+    {
+        "tensione": 3.97,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 13:10:05"
+    },
+    {
+        "tensione": 3.97,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 13:18:25"
+    },
+    {
+        "tensione": 3.95,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 13:26:45"
+    },
+    {
+        "tensione": 3.94,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 13:35:05"
+    },
+    {
+        "tensione": 3.94,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 13:43:25"
+    },
+    {
+        "tensione": 3.94,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 13:51:45"
+    },
+    {
+        "tensione": 3.92,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 14:00:05"
+    },
+    {
+        "tensione": 3.93,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 14:08:25"
+    },
+    {
+        "tensione": 3.92,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 14:16:45"
+    },
+    {
+        "tensione": 3.92,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 14:25:05"
+    },
+    {
+        "tensione": 3.92,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 14:33:25"
+    },
+    {
+        "tensione": 3.91,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 14:41:45"
+    },
+    {
+        "tensione": 3.91,
+        "corrente": 0.29,
+        "data_ora": "2025-01-20 14:50:05"
+    },
+    {
+        "tensione": 3.91,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 14:58:25"
+    },
+    {
+        "tensione": 3.9,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 15:06:45"
+    },
+    {
+        "tensione": 3.9,
+        "corrente": 0.29,
+        "data_ora": "2025-01-20 15:15:05"
+    },
+    {
+        "tensione": 3.9,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 15:23:25"
+    },
+    {
+        "tensione": 3.89,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 15:31:45"
+    },
+    {
+        "tensione": 3.89,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 15:40:05"
+    },
+    {
+        "tensione": 3.89,
+        "corrente": 0.37,
+        "data_ora": "2025-01-20 15:48:25"
+    },
+    {
+        "tensione": 3.9,
+        "corrente": 0.38,
+        "data_ora": "2025-01-20 15:56:45"
+    },
+    {
+        "tensione": 3.9,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 16:05:05"
+    },
+    {
+        "tensione": 3.89,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 16:13:25"
+    },
+    {
+        "tensione": 3.88,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 16:21:45"
+    },
+    {
+        "tensione": 3.88,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 16:30:05"
+    },
+    {
+        "tensione": 3.89,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 16:38:25"
+    },
+    {
+        "tensione": 3.89,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 16:46:45"
+    },
+    {
+        "tensione": 3.88,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 16:55:05"
+    },
+    {
+        "tensione": 3.89,
+        "corrente": 0.37,
+        "data_ora": "2025-01-20 17:03:25"
+    },
+    {
+        "tensione": 3.88,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 17:11:45"
+    },
+    {
+        "tensione": 3.88,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 17:20:05"
+    },
+    {
+        "tensione": 3.88,
+        "corrente": 0.27,
+        "data_ora": "2025-01-20 17:28:25"
+    },
+    {
+        "tensione": 3.88,
+        "corrente": 0.29,
+        "data_ora": "2025-01-20 17:36:45"
+    },
+    {
+        "tensione": 3.88,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 17:45:05"
+    },
+    {
+        "tensione": 3.88,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 17:53:25"
+    },
+    {
+        "tensione": 3.89,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 18:01:45"
+    },
+    {
+        "tensione": 3.87,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 18:10:05"
+    },
+    {
+        "tensione": 3.87,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 18:18:25"
+    },
+    {
+        "tensione": 3.87,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 18:26:45"
+    },
+    {
+        "tensione": 3.87,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 18:35:05"
+    },
+    {
+        "tensione": 3.86,
+        "corrente": 0.33,
+        "data_ora": "2025-01-20 18:43:25"
+    },
+    {
+        "tensione": 3.86,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 18:51:45"
+    },
+    {
+        "tensione": 3.86,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 19:00:04"
+    },
+    {
+        "tensione": 3.85,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 19:08:25"
+    },
+    {
+        "tensione": 3.86,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 19:16:45"
+    },
+    {
+        "tensione": 3.87,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 19:25:05"
+    },
+    {
+        "tensione": 3.86,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 19:33:25"
+    },
+    {
+        "tensione": 3.85,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 19:41:45"
+    },
+    {
+        "tensione": 3.86,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 19:50:05"
+    },
+    {
+        "tensione": 3.84,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 19:58:25"
+    },
+    {
+        "tensione": 3.84,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 20:06:45"
+    },
+    {
+        "tensione": 3.85,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 20:15:05"
+    },
+    {
+        "tensione": 3.84,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 20:23:25"
+    },
+    {
+        "tensione": 3.85,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 20:31:45"
+    },
+    {
+        "tensione": 3.85,
+        "corrente": 0.34,
+        "data_ora": "2025-01-20 20:40:05"
+    },
+    {
+        "tensione": 3.85,
+        "corrente": 0.29,
+        "data_ora": "2025-01-20 20:48:25"
+    },
+    {
+        "tensione": 3.84,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 20:56:45"
+    },
+    {
+        "tensione": 3.83,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 21:05:05"
+    },
+    {
+        "tensione": 3.83,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 21:13:25"
+    },
+    {
+        "tensione": 3.83,
+        "corrente": 0.28,
+        "data_ora": "2025-01-20 21:21:45"
+    },
+    {
+        "tensione": 3.82,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 21:30:05"
+    },
+    {
+        "tensione": 3.81,
+        "corrente": 0.32,
+        "data_ora": "2025-01-20 21:38:25"
+    },
+    {
+        "tensione": 3.81,
+        "corrente": 0.31,
+        "data_ora": "2025-01-20 21:46:45"
+    },
+    {
+        "tensione": 3.82,
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 21:55:05"
+    },
+    {
+        "tensione": 3.8,
+        "corrente": 0.32,
+        "data_ora": "2025-01-20 22:03:25"
+    },
+    {
+        "tensione": 3.81,
+        "corrente": 0.34,
+        "data_ora": "2025-01-20 22:11:45"
+    },
+    {
+        "tensione": 3.81,
+        "corrente": 0.29,
+        "data_ora": "2025-01-20 22:20:05"
+    },
+    {
+        "tensione": 3.8,
+        "corrente": 0.29,
+        "data_ora": "2025-01-20 22:28:25"
+    },
+    {
+        "tensione": 3.79,
+        "corrente": 0.32,
+        "data_ora": "2025-01-20 22:36:45"
+    },
+    {
+        "tensione": 3.79,
+        "corrente": 0.32,
+        "data_ora": "2025-01-20 22:45:05"
+    },
+    {
+        "tensione": 3.78,
+        "corrente": 0.32,
+        "data_ora": "2025-01-20 22:53:25"
+    },
+    {
+        "tensione": 3.77,
+        "corrente": 0.32,
+        "data_ora": "2025-01-20 23:01:45"
+    },
+    {
+        "tensione": 3.77,
+        "corrente": 0.32,
+        "data_ora": "2025-01-20 23:10:05"
+    },
+    {
+        "tensione": 3.76,
+        "corrente": 0.32,
+        "data_ora": "2025-01-20 23:18:25"
     },
     {
         "tensione": 3.74,
-        "corrente": 0.23,
-        "data_ora": "2025-01-19 10:20:48"
+        "corrente": 0.3,
+        "data_ora": "2025-01-20 23:26:45"
     },
     {
         "tensione": 3.73,
-        "corrente": 0.21,
-        "data_ora": "2025-01-19 10:29:08"
+        "corrente": 0.29,
+        "data_ora": "2025-01-20 23:35:05"
     },
     {
         "tensione": 3.73,
-        "corrente": 0.21,
-        "data_ora": "2025-01-19 10:37:28"
-    },
-    {
-        "tensione": 3.72,
-        "corrente": 0.24,
-        "data_ora": "2025-01-19 10:45:48"
-    },
-    {
-        "tensione": 3.72,
-        "corrente": 0.21,
-        "data_ora": "2025-01-19 10:54:08"
+        "corrente": 0.29,
+        "data_ora": "2025-01-20 23:43:25"
     },
     {
         "tensione": 3.71,
-        "corrente": 0.25,
-        "data_ora": "2025-01-19 11:02:28"
-    },
-    {
-        "tensione": 3.71,
-        "corrente": 0.21,
-        "data_ora": "2025-01-19 11:10:48"
+        "corrente": 0.32,
+        "data_ora": "2025-01-20 23:51:45"
     },
     {
         "tensione": 3.7,
-        "corrente": 0.24,
-        "data_ora": "2025-01-19 11:19:08"
-    },
-    {
-        "tensione": 3.7,
-        "corrente": 0.25,
-        "data_ora": "2025-01-19 11:27:28"
+        "corrente": 0.32,
+        "data_ora": "2025-01-21 00:00:05"
     },
     {
         "tensione": 3.69,
-        "corrente": 0.24,
-        "data_ora": "2025-01-19 11:35:48"
+        "corrente": 0.32,
+        "data_ora": "2025-01-21 00:08:25"
+    },
+    {
+        "tensione": 3.69,
+        "corrente": 0.33,
+        "data_ora": "2025-01-21 00:16:45"
     },
     {
         "tensione": 3.68,
-        "corrente": 0.27,
-        "data_ora": "2025-01-19 11:44:08"
-    },
-    {
-        "tensione": 3.68,
-        "corrente": 0.24,
-        "data_ora": "2025-01-19 11:52:28"
-    },
-    {
-        "tensione": 3.68,
-        "corrente": 0.2,
-        "data_ora": "2025-01-19 12:00:48"
-    },
-    {
-        "tensione": 3.68,
-        "corrente": 0.25,
-        "data_ora": "2025-01-19 12:09:08"
+        "corrente": 0.33,
+        "data_ora": "2025-01-21 00:25:05"
     },
     {
         "tensione": 3.67,
-        "corrente": 0.26,
-        "data_ora": "2025-01-19 12:17:28"
-    },
-    {
-        "tensione": 3.67,
-        "corrente": 0.24,
-        "data_ora": "2025-01-19 12:25:48"
-    },
-    {
-        "tensione": 3.66,
-        "corrente": 0.26,
-        "data_ora": "2025-01-19 12:34:08"
-    },
-    {
-        "tensione": 3.66,
-        "corrente": 0.23,
-        "data_ora": "2025-01-19 12:42:28"
-    },
-    {
-        "tensione": 3.65,
-        "corrente": 0.21,
-        "data_ora": "2025-01-19 12:50:48"
-    },
-    {
-        "tensione": 3.65,
-        "corrente": 0.21,
-        "data_ora": "2025-01-19 12:59:08"
-    },
-    {
-        "tensione": 3.65,
-        "corrente": 0.22,
-        "data_ora": "2025-01-19 13:07:28"
-    },
-    {
-        "tensione": 3.64,
-        "corrente": 0.25,
-        "data_ora": "2025-01-19 13:15:48"
-    },
-    {
-        "tensione": 3.64,
-        "corrente": 0.21,
-        "data_ora": "2025-01-19 13:24:08"
-    },
-    {
-        "tensione": 3.63,
-        "corrente": 0.24,
-        "data_ora": "2025-01-19 13:32:28"
-    },
-    {
-        "tensione": 3.59,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 13:40:48"
-    },
-    {
-        "tensione": 3.61,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 13:49:08"
-    },
-    {
-        "tensione": 3.6,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 13:57:28"
-    },
-    {
-        "tensione": 3.54,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 14:05:48"
-    },
-    {
-        "tensione": 3.6,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 14:14:08"
-    },
-    {
-        "tensione": 3.6,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 14:22:28"
-    },
-    {
-        "tensione": 3.59,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 14:30:48"
-    },
-    {
-        "tensione": 3.59,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 14:39:08"
-    },
-    {
-        "tensione": 3.58,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 14:47:28"
-    },
-    {
-        "tensione": 3.58,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 14:55:48"
-    },
-    {
-        "tensione": 3.57,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 15:04:08"
-    },
-    {
-        "tensione": 3.57,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 15:12:28"
-    },
-    {
-        "tensione": 3.57,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 15:20:48"
-    },
-    {
-        "tensione": 3.57,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 15:29:08"
-    },
-    {
-        "tensione": 3.56,
-        "corrente": 0.21,
-        "data_ora": "2025-01-19 15:37:28"
-    },
-    {
-        "tensione": 3.55,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 15:45:48"
-    },
-    {
-        "tensione": 3.53,
-        "corrente": 0.24,
-        "data_ora": "2025-01-19 15:54:08"
-    },
-    {
-        "tensione": 3.48,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 16:02:28"
-    },
-    {
-        "tensione": 3.47,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 16:10:48"
-    },
-    {
-        "tensione": 3.46,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 16:19:08"
-    },
-    {
-        "tensione": 3.45,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 16:27:28"
-    },
-    {
-        "tensione": 3.44,
-        "corrente": 0.2,
-        "data_ora": "2025-01-19 16:35:48"
-    },
-    {
-        "tensione": 3.52,
-        "corrente": 0.27,
-        "data_ora": "2025-01-19 16:44:08"
-    },
-    {
-        "tensione": 3.54,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 16:52:28"
-    },
-    {
-        "tensione": 3.53,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 17:00:48"
-    },
-    {
-        "tensione": 3.52,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 17:09:08"
-    },
-    {
-        "tensione": 3.52,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 17:17:28"
-    },
-    {
-        "tensione": 3.52,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 17:25:48"
-    },
-    {
-        "tensione": 3.49,
-        "corrente": 0.23,
-        "data_ora": "2025-01-19 17:34:08"
-    },
-    {
-        "tensione": 3.47,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 17:42:28"
-    },
-    {
-        "tensione": 3.4,
-        "corrente": 0.2,
-        "data_ora": "2025-01-19 17:50:48"
-    },
-    {
-        "tensione": 3.49,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 17:59:08"
-    },
-    {
-        "tensione": 3.48,
-        "corrente": 0.2,
-        "data_ora": "2025-01-19 18:07:28"
-    },
-    {
-        "tensione": 3.48,
-        "corrente": 0.19,
-        "data_ora": "2025-01-19 18:15:48"
-    },
-    {
-        "tensione": 3.47,
-        "corrente": 0.21,
-        "data_ora": "2025-01-19 18:24:08"
-    },
-    {
-        "tensione": 3.46,
-        "corrente": 0.21,
-        "data_ora": "2025-01-19 18:32:28"
-    },
-    {
-        "tensione": 3.43,
-        "corrente": 0.2,
-        "data_ora": "2025-01-19 18:40:48"
-    },
-    {
-        "tensione": 3.44,
-        "corrente": 0.24,
-        "data_ora": "2025-01-19 18:49:08"
-    },
-    {
-        "tensione": 3.42,
-        "corrente": 0.2,
-        "data_ora": "2025-01-19 18:57:28"
-    },
-    {
-        "tensione": 3.41,
-        "corrente": 0.2,
-        "data_ora": "2025-01-19 19:05:48"
-    },
-    {
-        "tensione": 3.41,
-        "corrente": 0.2,
-        "data_ora": "2025-01-19 19:14:08"
-    },
-    {
-        "tensione": 3.41,
-        "corrente": 0.2,
-        "data_ora": "2025-01-19 19:22:28"
-    },
-    {
-        "tensione": 3.42,
-        "corrente": 0.2,
-        "data_ora": "2025-01-19 19:30:48"
-    },
-    {
-        "tensione": 3.41,
-        "corrente": 0.21,
-        "data_ora": "2025-01-19 19:39:08"
-    },
-    {
-        "tensione": 3.42,
-        "corrente": 0.2,
-        "data_ora": "2025-01-19 19:47:28"
-    },
-    {
-        "tensione": 3.43,
-        "corrente": 0.2,
-        "data_ora": "2025-01-19 19:55:48"
-    },
-    {
-        "tensione": 3.42,
-        "corrente": 0.22,
-        "data_ora": "2025-01-19 20:04:08"
-    },
-    {
-        "tensione": 3.41,
-        "corrente": 0.22,
-        "data_ora": "2025-01-19 20:12:28"
-    },
-    {
-        "tensione": 3.41,
-        "corrente": 0.22,
-        "data_ora": "2025-01-19 20:20:48"
-    },
-    {
-        "tensione": 3.4,
-        "corrente": 0.22,
-        "data_ora": "2025-01-19 20:29:08"
-    },
-    {
-        "tensione": 3.38,
-        "corrente": 0.23,
-        "data_ora": "2025-01-19 20:37:28"
-    },
-    {
-        "tensione": 3.36,
-        "corrente": 0.22,
-        "data_ora": "2025-01-19 20:45:48"
-    },
-    {
-        "tensione": 3.33,
-        "corrente": 0.22,
-        "data_ora": "2025-01-19 20:54:08"
-    },
-    {
-        "tensione": 3.29,
-        "corrente": 0.21,
-        "data_ora": "2025-01-19 21:02:28"
-    },
-    {
-        "tensione": 3.26,
-        "corrente": 0.24,
-        "data_ora": "2025-01-19 21:10:48"
-    },
-    {
-        "tensione": 3.2,
-        "corrente": 0.27,
-        "data_ora": "2025-01-19 21:19:08"
-    },
-    {
-        "tensione": 3.13,
-        "corrente": 0.27,
-        "data_ora": "2025-01-19 21:27:28"
-    },
-    {
-        "tensione": 3.04,
-        "corrente": 0.23,
-        "data_ora": "2025-01-19 21:35:48"
+        "corrente": 0.33,
+        "data_ora": "2025-01-21 00:33:25"
     }
 ]
