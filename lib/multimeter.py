@@ -43,8 +43,8 @@ def read_voltage_current():
     shunt_voltage_raw = read_register(INA226_REG_SHUNT_VOLTAGE)
     
     # Convert raw values to meaningful units
-   # bus_voltage = (bus_voltage_raw * 1.25e-3) + 0.02  # Voltage in volts (1.25 mV per LSB)
-    bus_voltage = (bus_voltage_raw * 1.25e-3) + 0.80 #+ 0.230
+    bus_voltage = (bus_voltage_raw * 1.25e-3) + 4.25  # Voltage in volts (1.25 mV per LSB)
+   # bus_voltage = (bus_voltage_raw * 1.25e-3) + 0.80 #for 2S
     shunt_voltage = shunt_voltage_raw * 2.5e-6  # Voltage in volts (2.5 uV per LSB)
 
     # Current calculation depends on calibration value; for simplicity:
