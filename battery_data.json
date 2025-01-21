@@ -878,5 +878,95 @@
         "tensione": 3.67,
         "corrente": 0.33,
         "data_ora": "2025-01-21 00:33:25"
+    },
+    {
+        "tensione": 3.67,
+        "corrente": 0.33,
+        "data_ora": "2025-01-21 00:41:45"
+    },
+    {
+        "tensione": 3.66,
+        "corrente": 0.32,
+        "data_ora": "2025-01-21 00:50:05"
+    },
+    {
+        "tensione": 3.66,
+        "corrente": 0.33,
+        "data_ora": "2025-01-21 00:58:25"
+    },
+    {
+        "tensione": 3.66,
+        "corrente": 0.3,
+        "data_ora": "2025-01-21 01:06:45"
+    },
+    {
+        "tensione": 3.62,
+        "corrente": 0.33,
+        "data_ora": "2025-01-21 01:15:05"
+    },
+    {
+        "tensione": 3.63,
+        "corrente": 0.33,
+        "data_ora": "2025-01-21 01:23:25"
+    },
+    {
+        "tensione": 3.62,
+        "corrente": 0.33,
+        "data_ora": "2025-01-21 01:31:45"
+    },
+    {
+        "tensione": 3.62,
+        "corrente": 0.31,
+        "data_ora": "2025-01-21 01:40:05"
+    },
+    {
+        "tensione": 3.6,
+        "corrente": 0.31,
+        "data_ora": "2025-01-21 01:48:25"
+    },
+    {
+        "tensione": 3.59,
+        "corrente": 0.31,
+        "data_ora": "2025-01-21 01:56:45"
+    },
+    {
+        "tensione": 3.56,
+        "corrente": 0.34,
+        "data_ora": "2025-01-21 02:05:05"
+    },
+    {
+        "tensione": 3.54,
+        "corrente": 0.31,
+        "data_ora": "2025-01-21 02:13:25"
+    },
+    {
+        "tensione": 3.5,
+        "corrente": 0.31,
+        "data_ora": "2025-01-21 02:21:45"
+    },
+    {
+        "tensione": 3.8,
+        "corrente": 0.31,
+        "data_ora": "2025-01-21 02:30:05"
+    },
+    {
+        "tensione": 3.76,
+        "corrente": 0.32,
+        "data_ora": "2025-01-21 02:38:25"
+    },
+    {
+        "tensione": 3.71,
+        "corrente": 0.31,
+        "data_ora": "2025-01-21 02:46:45"
+    },
+    {
+        "tensione": 3.64,
+        "corrente": 0.32,
+        "data_ora": "2025-01-21 02:55:05"
+    },
+    {
+        "tensione": 3.33,
+        "corrente": 0.35,
+        "data_ora": "2025-01-21 03:03:25"
     }
 ]
