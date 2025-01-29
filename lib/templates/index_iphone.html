@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+kk<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -40,6 +40,16 @@
             display: inline-block;
             width: 100px;
         }
+        /* Styling for the fully filled blue circle (User's live location) */
+        .user-location-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: blue; /* Solid blue color */
+            border: 2px solid blue;
+            box-sizing: border-box;
+            box-shadow: 0 0 15px 5px rgba(0, 0, 255, 0.5); /* Blue shadow */
+        }
     </style>
 </head>
 <body>
@@ -48,11 +58,12 @@
         <div><strong>Latitude:</strong> <span id="latitude">Loading...</span></div>
         <div><strong>Longitude:</strong> <span id="longitude">Loading...</span></div>
         <div><strong>Speed:</strong> <span id="speed">Loading...</span> km/h</div>
-        <div><strong>Course:</strong> <span id="course">Loading...</span>ÃÂ°</div>
+        <div><strong>Course:</strong> <span id="course">Loading...</span>°</div>
         <div><strong>Altitude:</strong> <span id="altitude">Loading...</span> m</div>
         <div><strong>Satellites:</strong> <span id="satellites">Loading...</span></div>
-        <div><strong>Battery:</strong> <span id="avg_voltage">Loading...</span> %</div>
+        <div><strong>Battery:</strong> <span id="avg_voltage">Loading...</span>% (<span id="voltage">Loading...</span>V)</div>
     </div>
+
     <script>
         mapboxgl.accessToken = 'pk.eyJ1IjoibGlsbG8wOTciLCJhIjoiY20yOTZpamprMDB1djJqczd5ZzdlazR0YyJ9.Sro2dK6MfaSyBeZzBXmDSw';
 
@@ -63,24 +74,31 @@
             zoom: 2
         });
 
-        let marker = new mapboxgl.Marker().setLngLat([0, 0]).addTo(map);
-        let lastCoordinates = [0, 0];
+        // Tracker GPS marker (default style)
+        let trackerMarker = new mapboxgl.Marker().setLngLat([0, 0]).addTo(map);
+        let lastTrackerCoordinates = [0, 0];
 
+        // Custom user live location marker
+        let userMarkerElement = document.createElement('div');
+        userMarkerElement.className = 'user-location-circle';
+        let userMarker = new mapboxgl.Marker({
+            element: userMarkerElement
+        }).setLngLat([0, 0]).addTo(map);
+
+        // Update tracker data
         async function updateCoordinates() {
             try {
                 const response = await fetch('/get_coordinates');
                 const data = await response.json();
 
-                const newLngLat = [parseFloat(data.longitude), parseFloat(data.latitude)];
+                const newTrackerLngLat = [parseFloat(data.longitude), parseFloat(data.latitude)];
 
-                // Update map marker position and auto-center
-                if (newLngLat[0] !== lastCoordinates[0] || newLngLat[1] !== lastCoordinates[1]) {
-                    marker.setLngLat(newLngLat); // Move the marker
-                    map.setCenter(newLngLat); // Auto-center map
-                    lastCoordinates = newLngLat;
+                if (newTrackerLngLat[0] !== lastTrackerCoordinates[0] || newTrackerLngLat[1] !== lastTrackerCoordinates[1]) {
+                    trackerMarker.setLngLat(newTrackerLngLat);
+                    map.setCenter(newTrackerLngLat);
+                    lastTrackerCoordinates = newTrackerLngLat;
                 }
 
-                // Update the information display
                 document.getElementById('latitude').textContent = data.latitude || "N/A";
                 document.getElementById('longitude').textContent = data.longitude || "N/A";
                 document.getElementById('speed').textContent = (data.speed_over_ground || 0).toFixed(2);
@@ -88,16 +106,39 @@
                 document.getElementById('altitude').textContent = (data.altitude || 0).toFixed(2);
                 document.getElementById('satellites').textContent = data.num_satellites || "N/A";
                 document.getElementById('avg_voltage').textContent = Math.round(data.avg_voltage || 0);
+                document.getElementById('voltage').textContent = (data.voltage || 0).toFixed(2); // Rounded to 2 decimal places
             } catch (error) {
-                console.error('Error fetching data:', error);
+                console.error('Error fetching tracker data:', error);
             }
-
-            // Request next update
             requestAnimationFrame(updateCoordinates);
+        }
+
+        // Track user's live location
+        function trackUserLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.watchPosition(
+                    (position) => {
+                        const userLngLat = [position.coords.longitude, position.coords.latitude];
+                        userMarker.setLngLat(userLngLat);
+                    },
+                    (error) => {
+                        console.error('Error getting user location:', error);
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        maximumAge: 0,
+                        timeout: 5000
+                    }
+                );
+            } else {
+                console.error('Geolocation is not supported by this browser.');
+            }
         }
 
         // Start updating coordinates
         updateCoordinates();
+        trackUserLocation();
     </script>
 </body>
 </html>
+

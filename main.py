@@ -72,9 +72,9 @@ if __name__ == "__main__":
     debug_thread.daemon = True  # Imposta il thread come demone
     debug_thread.start()
     
-    print('Starting Telegram bot service...')
-    bot_thread = threading.Thread(target=run_bot)
-    bot_thread.start()
+#    print('Starting Telegram bot service...')
+ #   bot_thread = threading.Thread(target=run_bot)
+  #  bot_thread.start()
 
 #    print("Starting Multimeter service...")
  #   multimeter_thread = threading.Thread(target=run_multimeter)
@@ -90,7 +90,7 @@ if __name__ == "__main__":
     gps_thread.join()
     #start_services_thread.join()
     debug_thread.join()
-    bot_thread.join()
+   # bot_thread.join()
    # multimeter_thread.join()
     
     

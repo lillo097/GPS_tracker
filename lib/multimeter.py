@@ -34,7 +34,7 @@ def initialize_ina226():
 
     # Calibration value: adjust based on shunt resistor value and expected current range
     # For example, using a 0.1-ohm shunt resistor and a max current of 2A:
-    calibration_value = int(0.00512 / (0.1 * (0.5/32768)))  # Example calculation
+    calibration_value = int(0.00512 / (0.1 * (1/32768)))  # Example calculation
     write_register(INA226_REG_CALIBRATION, calibration_value)
 
 def read_voltage_current():
@@ -43,7 +43,7 @@ def read_voltage_current():
     shunt_voltage_raw = read_register(INA226_REG_SHUNT_VOLTAGE)
     
     # Convert raw values to meaningful units
-    bus_voltage = (bus_voltage_raw * 1.25e-3) + 4.25  # Voltage in volts (1.25 mV per LSB)
+    bus_voltage = (bus_voltage_raw * 1.25e-3) + 0.05   # Voltage in volts (1.25 mV per LSB)
    # bus_voltage = (bus_voltage_raw * 1.25e-3) + 0.80 #for 2S
     shunt_voltage = shunt_voltage_raw * 2.5e-6  # Voltage in volts (2.5 uV per LSB)
 
@@ -86,14 +86,14 @@ def salva_e_calcola_media(file_json, tensione, corrente):
 def run_multimeter():
     try:
         initialize_ina226()
-       # while True:
+        #while True:
         bus_voltage, current = read_voltage_current()
-  #          print(f"Bus Voltage: {bus_voltage:.3f} V")
- #           print(f"Current: {current:.3f} A")
-#            print("--------------------------")
+        #	print(f"Bus Voltage: {round(bus_voltage/3, 2)} V")
+        #	print(f"Current: {current:.3f} A")
+        #	print("--------------------------")
 #        media = salva_e_calcola_media('multimeter_data.json', bus_voltage, current)
 
-       # print(media)
+       	#	time.sleep(1)
 
     except KeyboardInterrupt:
         print("Exiting...")
