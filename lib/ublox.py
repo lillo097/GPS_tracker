@@ -143,7 +143,7 @@ def process_gps_data(data):
         # Reset current data after sending
         current_data = {key: None for key in current_data}
         
-def calculate_battery_percentage(voltage_avg, max_voltage=4.2, min_voltage=2.5):
+def calculate_battery_percentage(voltage_avg, max_voltage=4.2, min_voltage=3):
     if voltage_avg <= min_voltage:
         return 0.0
     elif voltage_avg >= max_voltage:
