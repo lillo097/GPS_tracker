@@ -160,11 +160,11 @@ if os.path.exists(file_json):
     os.remove(file_json)
 
 def runUblox():
+    shutdown_threshold = 2.85  # Imposta la soglia desiderata
     
     try:
-        with serial.Serial(serial_port, baudrate=57600, timeout=1) as ser:  # Adjust baud rate as needed
+        with serial.Serial(serial_port, baudrate=57600, timeout=1) as ser:
             ser.reset_input_buffer()
-            #print("Listening for GPS data...")
             index = 0
             v = 0
             c = 0
@@ -176,66 +176,67 @@ def runUblox():
                     if line.startswith('$GNGGA') or line.startswith('$GNRMC'):
                         data = parse_nmea_sentences(line)
                         if data:
-                            
                             current_time = time.time()
                             formatted_time = datetime.fromtimestamp(current_time).strftime('%H:%M:%S')
                             data['time'] = formatted_time
                             data['index'] = index
 
                             voltage, current = run_multimeter()
-                            if voltage/3 <= 2.45:
+                            
+                            if voltage <= shutdown_threshold:
+                                print("Battery voltage too low! Shutting down...")
                                 os.system("sudo shutdown")
+                                return
 
-                            v = v + voltage
-                            c = c + current
+                            v += voltage
+                            c += current
                             
                             if i == 500:
-                                i = 0
-                                i += 1
+                                i = 1
                                 v = voltage
                                 c = current
                             else:     
                                 i += 1
                           
-                            #write data on json to send to Flaask
-                            data['voltage'] = round(voltage/3, 2)
-                            data['current'] = round(voltage/3, 2)
-                            data['avg_voltage'] = calculate_battery_percentage((v/3)/i)
-                            
-                            print('iteration: ', index)
-                            if index % 1000 == 0:#write data to store on local
-                                print('----------------------------------------------------------> writing into json...')
+                            data['voltage'] = round(voltage, 2)
+                            data['current'] = round(current, 2)
+                            data['avg_voltage'] = calculate_battery_percentage(v / i)
+                            data['avg_current'] = round((c/i), 2)
+                            print('Iteration:', index)
+                            if index % 1000 == 0:
+                                print('----------------------------------------------------------> Writing into JSON...')
                                 try:
                                     with open('battery_data.json', 'r') as f:
                                         dati = json.load(f)
                                 except FileNotFoundError:
                                     dati = []
-                                    
+                                
                                 nuovo_dato = {
-                                    "tensione": round(voltage/3, 2),
-                                    "corrente": round(current, 2),
+                                    "avg_voltage": round(calculate_battery_percentage(v / i), 2),
+                                    "avg_current": round((c/i), 2),
+                                    "voltage": round(voltage, 2),
+                                    "current": round(current, 2),
                                     "data_ora": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                                 }
                                 dati.append(nuovo_dato)
                                             
                                 with open('battery_data.json', 'w') as f:
                                     json.dump(dati, f, indent=4)
-                            
-                            print('voltage: ', round(voltage/3, 2))
-                            print('current: ', round(current, 2))
-                            print('avg voltage: ', round((v/3)/i, 2))
-                            print('avg current: ', round(c/i, 2))
-                            print(calculate_battery_percentage((v/3)/i),'%')
+                            if i == 0:
+                                i = 1
+
+                            print('Voltage:', round(voltage, 2))
+                            print('Current:', round(current, 2))
+                            print('Avg Voltage:', round(v / i, 2))
+                            print('Avg Current:', round(c / i, 2))
+                            print(calculate_battery_percentage(v / i), '%')
                             print('-' * 50)
                         
                             process_gps_data(data)
                             index += 1
-                #else:
-                    #print("Buffer vuoto, in attesa di nuovi dati...")
+                
                 time.sleep(0.01)
-                #time.sleep(60)
-
+    
     except serial.SerialException as e:
         print(f"Error opening serial port: {e}")
-
 #runUblox()

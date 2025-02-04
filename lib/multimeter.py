@@ -52,7 +52,7 @@ def read_voltage_current():
 
     return bus_voltage, current
 
-def salva_e_calcola_media(file_json, tensione, corrente):
+def salva_e_calcola_media(file_json, tensione, corrente, avg_voltage, avg_current):
     try:
         with open(file_json, 'r') as f:
             dati = json.load(f)
@@ -62,7 +62,9 @@ def salva_e_calcola_media(file_json, tensione, corrente):
     # Aggiungi i nuovi dati
     nuovo_dato = {
         "tensione": tensione,
+        "avg_voltage": avg_voltage,
         "corrente": corrente,
+        "avg_current": avg_current,
         "data_ora": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
     dati.append(nuovo_dato)
@@ -83,25 +85,58 @@ def salva_e_calcola_media(file_json, tensione, corrente):
 
     return 
 
-def run_multimeter():
+def run_multimeter(divisor=2):
     try:
         initialize_ina226()
         #while True:
         bus_voltage, current = read_voltage_current()
-        #	print(f"Bus Voltage: {round(bus_voltage/3, 2)} V")
-        #	print(f"Current: {current:.3f} A")
-        #	print("--------------------------")
+        	#print(f"Bus Voltage: {round(bus_voltage/2, 2)} V")
+        	#print(f"Current: {current:.3f} A")
+        	#print("--------------------------")
 #        media = salva_e_calcola_media('multimeter_data.json', bus_voltage, current)
 
-       	#	time.sleep(1)
+       		#time.sleep(1)
 
     except KeyboardInterrupt:
         print("Exiting...")
 #    finally:
 #        bus.close()
 
-    return bus_voltage, current 
+    return bus_voltage/divisor, current
 
+def run_multimeter_test(divisor):
+    initialize_ina226()
+    v_acc = 0  # Accumulatore per la tensione
+    c_acc = 0  # Accumulatore per la corrente
+    i = 0  # Contatore delle letture
+    
+    while True:
+        bus_voltage, current = read_voltage_current()
+        
+        # Accumula i valori
+        v_acc += bus_voltage
+        c_acc += current
+        i += 1
+        
+        print(f"Bus Voltage: {round(bus_voltage / divisor, 2)} V")
+        print(f"Current: {current:.3f} A")
+        print("--------------------------")
 
-#run_multimeter()
+        # Calcola e salva la media ogni 1000 iterazioni
+        if i % 1000 == 0:
+            media = salva_e_calcola_media(
+                'multimeter_data_test.json',
+                round(bus_voltage / divisor, 3),
+                round(current, 3),
+                round((v_acc / (divisor * i)), 3),
+                round((c_acc / i), 3)
+            )
+            # Resetta gli accumulatori
+            v_acc = 0
+            c_acc = 0
+            i = 0
+        
+        time.sleep(1)
 
+#run_multimeter(divisor=2)
+run_multimeter_test(divisor=2)

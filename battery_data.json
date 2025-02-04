@@ -1,727 +1,161 @@
 [
     {
-        "tensione": 4.18,
-        "corrente": 0.16,
-        "data_ora": "2025-01-30 09:43:30"
+        "avg_voltage": 94,
+        "avg_current": 0.34,
+        "corrente": 0.34,
+        "data_ora": "2025-02-04 13:27:56"
     },
     {
-        "tensione": 4.16,
-        "corrente": 0.18,
-        "data_ora": "2025-01-30 09:51:50"
-    },
-    {
-        "tensione": 4.15,
-        "corrente": 0.16,
-        "data_ora": "2025-01-30 10:00:10"
-    },
-    {
-        "tensione": 4.15,
-        "corrente": 0.17,
-        "data_ora": "2025-01-30 10:08:30"
-    },
-    {
-        "tensione": 4.14,
-        "corrente": 0.17,
-        "data_ora": "2025-01-30 10:16:50"
-    },
-    {
-        "tensione": 4.13,
-        "corrente": 0.18,
-        "data_ora": "2025-01-30 10:25:10"
-    },
-    {
-        "tensione": 4.12,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 10:33:30"
-    },
-    {
-        "tensione": 4.11,
-        "corrente": 0.18,
-        "data_ora": "2025-01-30 10:41:50"
-    },
-    {
-        "tensione": 4.11,
-        "corrente": 0.18,
-        "data_ora": "2025-01-30 10:50:10"
-    },
-    {
-        "tensione": 4.1,
-        "corrente": 0.17,
-        "data_ora": "2025-01-30 10:58:30"
-    },
-    {
-        "tensione": 4.09,
-        "corrente": 0.17,
-        "data_ora": "2025-01-30 11:06:50"
-    },
-    {
-        "tensione": 4.09,
-        "corrente": 0.18,
-        "data_ora": "2025-01-30 11:15:10"
-    },
-    {
-        "tensione": 4.08,
-        "corrente": 0.17,
-        "data_ora": "2025-01-30 11:23:30"
-    },
-    {
-        "tensione": 4.07,
-        "corrente": 0.17,
-        "data_ora": "2025-01-30 11:31:50"
-    },
-    {
-        "tensione": 4.07,
-        "corrente": 0.17,
-        "data_ora": "2025-01-30 11:40:10"
-    },
-    {
-        "tensione": 4.06,
-        "corrente": 0.17,
-        "data_ora": "2025-01-30 11:48:30"
-    },
-    {
-        "tensione": 4.05,
-        "corrente": 0.17,
-        "data_ora": "2025-01-30 11:56:50"
-    },
-    {
-        "tensione": 4.05,
-        "corrente": 0.17,
-        "data_ora": "2025-01-30 12:05:10"
-    },
-    {
-        "tensione": 4.04,
-        "corrente": 0.17,
-        "data_ora": "2025-01-30 12:13:30"
-    },
-    {
-        "tensione": 4.03,
-        "corrente": 0.18,
-        "data_ora": "2025-01-30 12:21:50"
-    },
-    {
-        "tensione": 4.02,
-        "corrente": 0.18,
-        "data_ora": "2025-01-30 12:30:10"
-    },
-    {
-        "tensione": 4.02,
-        "corrente": 0.18,
-        "data_ora": "2025-01-30 12:38:30"
-    },
-    {
-        "tensione": 4.01,
-        "corrente": 0.17,
-        "data_ora": "2025-01-30 12:46:50"
-    },
-    {
-        "tensione": 4.0,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 12:55:10"
-    },
-    {
-        "tensione": 4.0,
-        "corrente": 0.17,
-        "data_ora": "2025-01-30 13:03:30"
-    },
-    {
-        "tensione": 3.99,
-        "corrente": 0.17,
-        "data_ora": "2025-01-30 13:11:50"
-    },
-    {
-        "tensione": 3.98,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 13:20:10"
-    },
-    {
-        "tensione": 3.98,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 13:28:30"
-    },
-    {
-        "tensione": 3.97,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 13:36:50"
-    },
-    {
-        "tensione": 3.96,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 13:45:10"
-    },
-    {
-        "tensione": 3.96,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 13:53:30"
-    },
-    {
-        "tensione": 3.95,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 14:01:50"
-    },
-    {
-        "tensione": 3.95,
-        "corrente": 0.17,
-        "data_ora": "2025-01-30 14:10:10"
-    },
-    {
-        "tensione": 3.94,
-        "corrente": 0.17,
-        "data_ora": "2025-01-30 14:18:30"
-    },
-    {
-        "tensione": 3.93,
-        "corrente": 0.17,
-        "data_ora": "2025-01-30 14:26:50"
-    },
-    {
-        "tensione": 3.93,
-        "corrente": 0.17,
-        "data_ora": "2025-01-30 14:35:10"
-    },
-    {
-        "tensione": 3.92,
-        "corrente": 0.17,
-        "data_ora": "2025-01-30 14:43:30"
-    },
-    {
-        "tensione": 3.91,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 14:51:50"
-    },
-    {
-        "tensione": 3.9,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 15:00:10"
-    },
-    {
-        "tensione": 3.9,
-        "corrente": 0.18,
-        "data_ora": "2025-01-30 15:08:30"
-    },
-    {
-        "tensione": 3.89,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 15:16:50"
-    },
-    {
-        "tensione": 3.88,
-        "corrente": 0.17,
-        "data_ora": "2025-01-30 15:25:10"
-    },
-    {
-        "tensione": 3.87,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 15:33:30"
-    },
-    {
-        "tensione": 3.87,
-        "corrente": 0.17,
-        "data_ora": "2025-01-30 15:41:50"
-    },
-    {
-        "tensione": 3.86,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 15:50:10"
-    },
-    {
-        "tensione": 3.85,
-        "corrente": 0.18,
-        "data_ora": "2025-01-30 15:58:30"
-    },
-    {
-        "tensione": 3.84,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 16:06:50"
-    },
-    {
-        "tensione": 3.83,
-        "corrente": 0.18,
-        "data_ora": "2025-01-30 16:15:10"
-    },
-    {
-        "tensione": 3.81,
-        "corrente": 0.2,
-        "data_ora": "2025-01-30 16:23:30"
-    },
-    {
-        "tensione": 3.81,
-        "corrente": 0.18,
-        "data_ora": "2025-01-30 16:31:50"
-    },
-    {
-        "tensione": 3.8,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 16:40:10"
-    },
-    {
-        "tensione": 3.79,
-        "corrente": 0.2,
-        "data_ora": "2025-01-30 16:48:30"
-    },
-    {
-        "tensione": 3.78,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 16:56:50"
-    },
-    {
-        "tensione": 3.78,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 17:05:10"
-    },
-    {
-        "tensione": 3.77,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 17:13:30"
-    },
-    {
-        "tensione": 3.76,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 17:21:50"
-    },
-    {
-        "tensione": 3.76,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 17:30:10"
-    },
-    {
-        "tensione": 3.75,
-        "corrente": 0.18,
-        "data_ora": "2025-01-30 17:38:30"
-    },
-    {
-        "tensione": 3.75,
-        "corrente": 0.18,
-        "data_ora": "2025-01-30 17:46:50"
-    },
-    {
-        "tensione": 3.74,
-        "corrente": 0.18,
-        "data_ora": "2025-01-30 17:55:10"
-    },
-    {
-        "tensione": 3.73,
-        "corrente": 0.18,
-        "data_ora": "2025-01-30 18:03:30"
-    },
-    {
-        "tensione": 3.73,
-        "corrente": 0.2,
-        "data_ora": "2025-01-30 18:11:50"
-    },
-    {
-        "tensione": 3.72,
-        "corrente": 0.18,
-        "data_ora": "2025-01-30 18:20:10"
-    },
-    {
-        "tensione": 3.72,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 18:28:30"
-    },
-    {
-        "tensione": 3.71,
-        "corrente": 0.2,
-        "data_ora": "2025-01-30 18:36:50"
-    },
-    {
-        "tensione": 3.71,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 18:45:10"
-    },
-    {
-        "tensione": 3.7,
-        "corrente": 0.2,
-        "data_ora": "2025-01-30 18:53:30"
-    },
-    {
-        "tensione": 3.7,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 19:01:50"
-    },
-    {
-        "tensione": 3.69,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 19:10:10"
-    },
-    {
-        "tensione": 3.68,
-        "corrente": 0.2,
-        "data_ora": "2025-01-30 19:18:30"
-    },
-    {
-        "tensione": 3.68,
-        "corrente": 0.18,
-        "data_ora": "2025-01-30 19:26:50"
-    },
-    {
-        "tensione": 3.67,
-        "corrente": 0.22,
-        "data_ora": "2025-01-30 19:35:10"
-    },
-    {
-        "tensione": 3.67,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 19:43:30"
-    },
-    {
-        "tensione": 3.67,
-        "corrente": 0.2,
-        "data_ora": "2025-01-30 19:51:50"
-    },
-    {
-        "tensione": 3.66,
-        "corrente": 0.22,
-        "data_ora": "2025-01-30 20:00:10"
-    },
-    {
-        "tensione": 3.66,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 20:08:30"
-    },
-    {
-        "tensione": 3.66,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 20:16:50"
-    },
-    {
-        "tensione": 3.65,
-        "corrente": 0.21,
-        "data_ora": "2025-01-30 20:25:10"
-    },
-    {
-        "tensione": 3.65,
-        "corrente": 0.21,
-        "data_ora": "2025-01-30 20:33:30"
-    },
-    {
-        "tensione": 3.65,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 20:41:50"
-    },
-    {
-        "tensione": 3.64,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 20:50:10"
-    },
-    {
-        "tensione": 3.64,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 20:58:30"
-    },
-    {
-        "tensione": 3.64,
-        "corrente": 0.2,
-        "data_ora": "2025-01-30 21:06:50"
-    },
-    {
-        "tensione": 3.63,
-        "corrente": 0.2,
-        "data_ora": "2025-01-30 21:15:10"
-    },
-    {
-        "tensione": 3.63,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 21:23:30"
-    },
-    {
-        "tensione": 3.63,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 21:31:50"
-    },
-    {
-        "tensione": 3.62,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 21:40:10"
-    },
-    {
-        "tensione": 3.62,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 21:48:30"
-    },
-    {
-        "tensione": 3.62,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 21:56:50"
-    },
-    {
-        "tensione": 3.61,
-        "corrente": 0.21,
-        "data_ora": "2025-01-30 22:05:10"
-    },
-    {
-        "tensione": 3.61,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 22:13:30"
-    },
-    {
-        "tensione": 3.61,
-        "corrente": 0.21,
-        "data_ora": "2025-01-30 22:21:50"
-    },
-    {
-        "tensione": 3.61,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 22:30:10"
-    },
-    {
-        "tensione": 3.61,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 22:38:30"
-    },
-    {
-        "tensione": 3.6,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 22:46:50"
-    },
-    {
-        "tensione": 3.6,
-        "corrente": 0.2,
-        "data_ora": "2025-01-30 22:55:10"
-    },
-    {
-        "tensione": 3.59,
-        "corrente": 0.22,
-        "data_ora": "2025-01-30 23:03:30"
-    },
-    {
-        "tensione": 3.59,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 23:11:50"
-    },
-    {
-        "tensione": 3.59,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 23:20:10"
-    },
-    {
-        "tensione": 3.59,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 23:28:30"
-    },
-    {
-        "tensione": 3.58,
-        "corrente": 0.21,
-        "data_ora": "2025-01-30 23:36:50"
-    },
-    {
-        "tensione": 3.58,
-        "corrente": 0.19,
-        "data_ora": "2025-01-30 23:45:10"
-    },
-    {
-        "tensione": 3.58,
-        "corrente": 0.21,
-        "data_ora": "2025-01-30 23:53:30"
-    },
-    {
-        "tensione": 3.58,
-        "corrente": 0.19,
-        "data_ora": "2025-01-31 00:01:50"
-    },
-    {
-        "tensione": 3.57,
-        "corrente": 0.21,
-        "data_ora": "2025-01-31 00:10:10"
-    },
-    {
-        "tensione": 3.57,
-        "corrente": 0.19,
-        "data_ora": "2025-01-31 00:18:30"
-    },
-    {
-        "tensione": 3.56,
-        "corrente": 0.2,
-        "data_ora": "2025-01-31 00:26:50"
-    },
-    {
-        "tensione": 3.56,
-        "corrente": 0.21,
-        "data_ora": "2025-01-31 00:35:10"
-    },
-    {
-        "tensione": 3.56,
-        "corrente": 0.19,
-        "data_ora": "2025-01-31 00:43:30"
-    },
-    {
-        "tensione": 3.55,
-        "corrente": 0.19,
-        "data_ora": "2025-01-31 00:51:50"
-    },
-    {
-        "tensione": 3.55,
-        "corrente": 0.21,
-        "data_ora": "2025-01-31 01:00:10"
-    },
-    {
-        "tensione": 3.54,
-        "corrente": 0.21,
-        "data_ora": "2025-01-31 01:08:30"
-    },
-    {
-        "tensione": 3.54,
-        "corrente": 0.19,
-        "data_ora": "2025-01-31 01:16:50"
-    },
-    {
-        "tensione": 3.53,
-        "corrente": 0.21,
-        "data_ora": "2025-01-31 01:25:10"
-    },
-    {
-        "tensione": 3.53,
-        "corrente": 0.21,
-        "data_ora": "2025-01-31 01:33:30"
-    },
-    {
-        "tensione": 3.52,
-        "corrente": 0.19,
-        "data_ora": "2025-01-31 01:41:50"
-    },
-    {
-        "tensione": 3.52,
-        "corrente": 0.19,
-        "data_ora": "2025-01-31 01:50:10"
-    },
-    {
-        "tensione": 3.51,
-        "corrente": 0.2,
-        "data_ora": "2025-01-31 01:58:30"
-    },
-    {
-        "tensione": 3.5,
-        "corrente": 0.2,
-        "data_ora": "2025-01-31 02:06:50"
-    },
-    {
-        "tensione": 3.49,
-        "corrente": 0.21,
-        "data_ora": "2025-01-31 02:15:10"
-    },
-    {
-        "tensione": 3.49,
-        "corrente": 0.19,
-        "data_ora": "2025-01-31 02:23:30"
-    },
-    {
-        "tensione": 3.48,
-        "corrente": 0.21,
-        "data_ora": "2025-01-31 02:31:50"
-    },
-    {
-        "tensione": 3.47,
-        "corrente": 0.21,
-        "data_ora": "2025-01-31 02:40:10"
-    },
-    {
-        "tensione": 3.47,
-        "corrente": 0.2,
-        "data_ora": "2025-01-31 02:48:30"
-    },
-    {
-        "tensione": 3.46,
-        "corrente": 0.22,
-        "data_ora": "2025-01-31 02:56:50"
-    },
-    {
-        "tensione": 3.47,
-        "corrente": 0.19,
-        "data_ora": "2025-01-31 03:05:10"
-    },
-    {
-        "tensione": 3.46,
-        "corrente": 0.21,
-        "data_ora": "2025-01-31 03:13:30"
-    },
-    {
-        "tensione": 3.46,
-        "corrente": 0.2,
-        "data_ora": "2025-01-31 03:21:50"
-    },
-    {
-        "tensione": 3.45,
-        "corrente": 0.2,
-        "data_ora": "2025-01-31 03:30:10"
-    },
-    {
-        "tensione": 3.45,
-        "corrente": 0.2,
-        "data_ora": "2025-01-31 03:38:30"
-    },
-    {
-        "tensione": 3.45,
-        "corrente": 0.2,
-        "data_ora": "2025-01-31 03:46:50"
-    },
-    {
-        "tensione": 3.44,
-        "corrente": 0.2,
-        "data_ora": "2025-01-31 03:55:10"
-    },
-    {
-        "tensione": 3.44,
-        "corrente": 0.19,
-        "data_ora": "2025-01-31 04:03:30"
-    },
-    {
-        "tensione": 3.43,
-        "corrente": 0.2,
-        "data_ora": "2025-01-31 04:11:50"
-    },
-    {
-        "tensione": 3.43,
-        "corrente": 0.24,
-        "data_ora": "2025-01-31 04:20:10"
-    },
-    {
-        "tensione": 3.42,
-        "corrente": 0.22,
-        "data_ora": "2025-01-31 04:28:30"
-    },
-    {
-        "tensione": 3.4,
-        "corrente": 0.2,
-        "data_ora": "2025-01-31 04:36:50"
-    },
-    {
-        "tensione": 3.38,
-        "corrente": 0.22,
-        "data_ora": "2025-01-31 04:45:10"
-    },
-    {
-        "tensione": 3.35,
-        "corrente": 0.2,
-        "data_ora": "2025-01-31 04:53:30"
-    },
-    {
-        "tensione": 3.32,
-        "corrente": 0.22,
-        "data_ora": "2025-01-31 05:01:50"
-    },
-    {
-        "tensione": 3.28,
-        "corrente": 0.2,
-        "data_ora": "2025-01-31 05:10:10"
-    },
-    {
-        "tensione": 3.23,
-        "corrente": 0.23,
-        "data_ora": "2025-01-31 05:18:30"
-    },
-    {
-        "tensione": 3.17,
+        "avg_voltage": 95,
+        "avg_current": 0.26,
         "corrente": 0.26,
-        "data_ora": "2025-01-31 05:26:50"
+        "data_ora": "2025-02-04 13:46:20"
     },
     {
-        "tensione": 3.1,
-        "corrente": 0.23,
-        "data_ora": "2025-01-31 05:35:10"
+        "avg_voltage": 88,
+        "avg_current": 0.28,
+        "voltage": 4.06,
+        "current": 0.28,
+        "data_ora": "2025-02-04 19:00:47"
     },
     {
-        "tensione": 3.01,
-        "corrente": 0.25,
-        "data_ora": "2025-01-31 05:43:30"
+        "avg_voltage": 88,
+        "avg_current": 0.3,
+        "voltage": 4.06,
+        "current": 0.3,
+        "data_ora": "2025-02-04 19:08:13"
+    },
+    {
+        "avg_voltage": 87,
+        "avg_current": 0.25,
+        "voltage": 4.06,
+        "current": 0.25,
+        "data_ora": "2025-02-04 19:16:33"
+    },
+    {
+        "avg_voltage": 87,
+        "avg_current": 0.31,
+        "voltage": 4.05,
+        "current": 0.31,
+        "data_ora": "2025-02-04 19:24:53"
+    },
+    {
+        "avg_voltage": 87,
+        "avg_current": 0.26,
+        "voltage": 4.05,
+        "current": 0.26,
+        "data_ora": "2025-02-04 19:33:13"
+    },
+    {
+        "avg_voltage": 87,
+        "avg_current": 0.27,
+        "voltage": 4.05,
+        "current": 0.27,
+        "data_ora": "2025-02-04 19:41:33"
+    },
+    {
+        "avg_voltage": 87,
+        "avg_current": 0.24,
+        "voltage": 4.04,
+        "current": 0.24,
+        "data_ora": "2025-02-04 19:49:53"
+    },
+    {
+        "avg_voltage": 86,
+        "avg_current": 0.25,
+        "voltage": 4.04,
+        "current": 0.25,
+        "data_ora": "2025-02-04 19:58:13"
+    },
+    {
+        "avg_voltage": 86,
+        "avg_current": 0.25,
+        "voltage": 4.04,
+        "current": 0.25,
+        "data_ora": "2025-02-04 20:06:33"
+    },
+    {
+        "avg_voltage": 85,
+        "avg_current": 0.27,
+        "voltage": 4.03,
+        "current": 0.27,
+        "data_ora": "2025-02-04 20:14:53"
+    },
+    {
+        "avg_voltage": 85,
+        "avg_current": 0.25,
+        "voltage": 4.03,
+        "current": 0.25,
+        "data_ora": "2025-02-04 20:23:13"
+    },
+    {
+        "avg_voltage": 85,
+        "avg_current": 0.27,
+        "voltage": 4.02,
+        "current": 0.27,
+        "data_ora": "2025-02-04 20:31:33"
+    },
+    {
+        "avg_voltage": 85,
+        "avg_current": 0.25,
+        "voltage": 4.02,
+        "current": 0.25,
+        "data_ora": "2025-02-04 20:39:53"
+    },
+    {
+        "avg_voltage": 84,
+        "avg_current": 0.25,
+        "voltage": 4.02,
+        "current": 0.25,
+        "data_ora": "2025-02-04 20:48:13"
+    },
+    {
+        "avg_voltage": 83,
+        "avg_current": 0.26,
+        "voltage": 4.01,
+        "current": 0.26,
+        "data_ora": "2025-02-04 20:56:33"
+    },
+    {
+        "avg_voltage": 83,
+        "avg_current": 0.28,
+        "voltage": 4.01,
+        "current": 0.28,
+        "data_ora": "2025-02-04 21:04:53"
+    },
+    {
+        "avg_voltage": 83,
+        "avg_current": 0.27,
+        "voltage": 4.0,
+        "current": 0.27,
+        "data_ora": "2025-02-04 21:13:13"
+    },
+    {
+        "avg_voltage": 83,
+        "avg_current": 0.27,
+        "voltage": 4.0,
+        "current": 0.27,
+        "data_ora": "2025-02-04 21:21:33"
+    },
+    {
+        "avg_voltage": 82,
+        "avg_current": 0.28,
+        "voltage": 3.99,
+        "current": 0.28,
+        "data_ora": "2025-02-04 21:29:53"
+    },
+    {
+        "avg_voltage": 82,
+        "avg_current": 0.27,
+        "voltage": 3.99,
+        "current": 0.27,
+        "data_ora": "2025-02-04 21:38:13"
+    },
+    {
+        "avg_voltage": 81,
+        "avg_current": 0.27,
+        "voltage": 3.98,
+        "current": 0.27,
+        "data_ora": "2025-02-04 21:46:33"
     }
 ]
